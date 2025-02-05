@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Multiplayer Game Test.sln"
+    "dotnet.defaultSolution": "CatElementalQuest.sln"
 }
