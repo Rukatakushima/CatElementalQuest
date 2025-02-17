@@ -33,6 +33,7 @@ public class Lava : ElementalObject
         {
             Debug.Log("Водяной игрок потушил лаву");
             currentState = ElementalObjectState.SecondState;
+            UpdateElementalObjectSprite();
         }
 
     }
