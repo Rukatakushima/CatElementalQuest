@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
@@ -8,7 +6,12 @@ public class CameraFollower : MonoBehaviour
     private Vector3 playerVector;
     public int speed;
 
-    void Update()
+    private void Update()
+    {
+        UpdateCameraPosition();
+    }
+
+    private void UpdateCameraPosition()
     {
         playerVector = player.position;
         playerVector.z = -10;
