@@ -30,6 +30,7 @@ public abstract class Ability : MonoBehaviour
 
     public abstract void UseAbility();
 
+    //для блуждения по воде и лаве
     // private void OnCollisionEnter2D(Collision2D other)
     // {
     //     ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
