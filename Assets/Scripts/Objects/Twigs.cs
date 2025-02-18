@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Twigs : ElementalObject
 {
-    private void Start()
+    protected override void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Start();
         UpdateElementalObjectSprite();
     }
 
@@ -30,7 +30,8 @@ public class Twigs : ElementalObject
         if (playerAbility is FireAbility)
         {
             Debug.Log("Хворост загорелся!");
-            currentState = ElementalObjectState.SecondState;
+            // currentState = ElementalObjectState.SecondState;
+            ChangeState(ElementalObjectState.SecondState);
             UpdateElementalObjectSprite();
         }
     }
@@ -40,7 +41,8 @@ public class Twigs : ElementalObject
         if (playerAbility is WaterAbility)
         {
             Debug.Log("Хворост потушен и превратился в пепел!");
-            currentState = ElementalObjectState.ThirdState;
+            // currentState = ElementalObjectState.ThirdState;
+            ChangeState(ElementalObjectState.ThirdState);
             UpdateElementalObjectSprite();
             GetComponent<Collider2D>().isTrigger = true;
         }
@@ -48,20 +50,40 @@ public class Twigs : ElementalObject
 
     private void HandleAshState(Ability playerAbility)
     {
-        if (playerAbility.isAbilityActive && currentState == ElementalObjectState.ThirdState && playerAbility is WindAbility)
+        if (currentState == ElementalObjectState.ThirdState &&
+            playerAbility is WindAbility &&
+            playerAbility.isAbilityActive)
         {
             Debug.Log("Пепел раздулся ветром и исчез!");
             gameObject.SetActive(false);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     HandleAshState(other.gameObject.GetComponent<Ability>());
+    // }
+
+    // private void OnTriggerStay2D(Collider2D other)
+    // {
+    //     Ability playerAbility = other.gameObject.GetComponent<Ability>();
+
+    //     if (playerAbility)
+    //         HandleAshState(playerAbility);
+    // }
+
+    protected override void HandleTriggerInteraction(Collider2D other)
     {
         HandleAshState(other.gameObject.GetComponent<Ability>());
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        HandleAshState(other.gameObject.GetComponent<Ability>());
+        HandleTriggerInteraction(other);
+    }
+    
+    protected override void HandleStateChange(ElementalObjectState newState)
+    {
+        Debug.Log($"Состояние хвороста изменено на: {newState}");
     }
 }

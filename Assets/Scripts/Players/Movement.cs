@@ -31,10 +31,6 @@ public class Movement : MonoBehaviour
     {
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-
-        // Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        // Vector2 moveAmount = moveInput.normalized * moveSpeed * Time.deltaTime;
-        // transform.position += (Vector3)moveAmount;
     }
 
     private void Jump()
@@ -45,7 +41,15 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    // void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Ground"))
+    //     {
+    //         isGrounded = true;
+    //     }
+    // }
+
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
