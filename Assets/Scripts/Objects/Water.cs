@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class Water : ElementalObject
+public class Water : DangerousElementalObject
 {
-    [SerializeField] protected RespawnManager respawnManager;
-
     public override void HandleInstantInteraction(Ability playerAbility)
     {
         if (currentState == ElementalObjectState.SecondState)
@@ -15,15 +13,19 @@ public class Water : ElementalObject
                 HandleContinuousInteraction(playerAbility);
             }
         }
-        else if (playerAbility is WaterAbility)
+        else if (playerAbility is WaterAbility || playerAbility is IceAbility)
         {
-            Debug.Log("Водный игрок безопасно проходит через воду.");
+            Debug.Log("Водный или ледяной игрок безопасно проходит через воду.");
         }
-        else if (playerAbility is IceAbility)
-        {
-            HandleContinuousInteraction(playerAbility);
-            Debug.Log("Ледяной игрок безопасно проходит через воду.");
-        }
+        // else if (playerAbility is WaterAbility)
+        // {
+        //     Debug.Log("Водный игрок безопасно проходит через воду.");
+        // }
+        // else if (playerAbility is IceAbility)
+        // {
+        //     HandleContinuousInteraction(playerAbility);
+        //     Debug.Log("Ледяной игрок безопасно проходит через воду.");
+        // }
         else
         {
             Debug.Log("Игрок утонул!");
@@ -38,12 +40,19 @@ public class Water : ElementalObject
         if (playerAbility is IceAbility && currentState == ElementalObjectState.FirstState)
         {
             Debug.Log("Леденной игрок заморозил воду");
-            currentState = ElementalObjectState.SecondState;
+            // currentState = ElementalObjectState.SecondState;
+            ChangeState(ElementalObjectState.SecondState);
         }
         else if (playerAbility is FireAbility && currentState == ElementalObjectState.SecondState)
         {
             Debug.Log("Оненный игрок разморозил воду");
-            currentState = ElementalObjectState.FirstState;
+            // currentState = ElementalObjectState.FirstState;
+            ChangeState(ElementalObjectState.FirstState);
         }
+    }
+    
+    protected override void HandleStateChange(ElementalObjectState newState)
+    {
+        Debug.Log($"Состояние воды изменено на: {newState}");
     }
 }
