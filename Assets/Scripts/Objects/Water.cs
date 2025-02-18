@@ -39,13 +39,11 @@ public class Water : ElementalObject
         {
             Debug.Log("Леденной игрок заморозил воду");
             currentState = ElementalObjectState.SecondState;
-            UpdateElementalObjectSprite();
         }
         else if (playerAbility is FireAbility && currentState == ElementalObjectState.SecondState)
         {
             Debug.Log("Оненный игрок разморозил воду");
             currentState = ElementalObjectState.FirstState;
-            UpdateElementalObjectSprite();
         }
     }
 }
