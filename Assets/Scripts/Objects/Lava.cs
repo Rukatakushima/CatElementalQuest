@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class Lava : DangerousElementalObject
+public class Lava : ElementalObject
 {
+    [SerializeField] protected RespawnManager respawnManager;
+
     public override void HandleInstantInteraction(Ability playerAbility)
     {
         if (currentState == ElementalObjectState.SecondState)
@@ -15,7 +17,7 @@ public class Lava : DangerousElementalObject
         else if (playerAbility is WaterAbility)
         {
             HandleContinuousInteraction(playerAbility);
-            Debug.Log("Водяной игрок проходит через огонь.");
+            Debug.Log("Водяной игрок безопасно проходит через воду.");
         }
         else
         {
@@ -26,22 +28,12 @@ public class Lava : DangerousElementalObject
 
     public override void HandleContinuousInteraction(Ability playerAbility)
     {
-        if (!playerAbility.isAbilityActive)
-        {
-            Debug.Log("Водяной игрок сгорел!");
-            respawnManager.Respawn(playerAbility.gameObject);
-            return;
-        }
-
+        if (!playerAbility.isAbilityActive) return;
         if (playerAbility is WaterAbility && currentState == ElementalObjectState.FirstState)
         {
             Debug.Log("Водяной игрок потушил лаву");
-<<<<<<< HEAD
-            UpdateElementalObjectSprite();
-            GetComponent<Collider2D>().isTrigger = false;
-=======
->>>>>>> parent of 7ca45be (ElementalObject #2)
             currentState = ElementalObjectState.SecondState;
+            UpdateElementalObjectSprite();
         }
 
     }

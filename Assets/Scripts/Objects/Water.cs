@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class Water : DangerousElementalObject
+public class Water : ElementalObject
 {
+    [SerializeField] protected RespawnManager respawnManager;
+
     public override void HandleInstantInteraction(Ability playerAbility)
     {
         if (currentState == ElementalObjectState.SecondState)
@@ -36,22 +38,14 @@ public class Water : DangerousElementalObject
         if (playerAbility is IceAbility && currentState == ElementalObjectState.FirstState)
         {
             Debug.Log("Леденной игрок заморозил воду");
-<<<<<<< HEAD
-            UpdateElementalObjectSprite();
-            GetComponent<Collider2D>().isTrigger = false;
-=======
->>>>>>> parent of 7ca45be (ElementalObject #2)
             currentState = ElementalObjectState.SecondState;
+            UpdateElementalObjectSprite();
         }
         else if (playerAbility is FireAbility && currentState == ElementalObjectState.SecondState)
         {
             Debug.Log("Оненный игрок разморозил воду");
-<<<<<<< HEAD
-            UpdateElementalObjectSprite();
-            GetComponent<Collider2D>().isTrigger = true;
-=======
->>>>>>> parent of 7ca45be (ElementalObject #2)
             currentState = ElementalObjectState.FirstState;
+            UpdateElementalObjectSprite();
         }
     }
 }
