@@ -36,8 +36,11 @@ public class Lava : DangerousElementalObject
         if (playerAbility is WaterAbility && currentState == ElementalObjectState.FirstState)
         {
             Debug.Log("Водяной игрок потушил лаву");
+<<<<<<< HEAD
             UpdateElementalObjectSprite();
             GetComponent<Collider2D>().isTrigger = false;
+=======
+>>>>>>> parent of 7ca45be (ElementalObject #2)
             currentState = ElementalObjectState.SecondState;
         }
 
