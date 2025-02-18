@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Twigs : ElementalObject
 {
-    private void Start()
+    protected override void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Start();
         UpdateElementalObjectSprite();
     }
 
@@ -55,12 +55,12 @@ public class Twigs : ElementalObject
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
         HandleAshState(other.gameObject.GetComponent<Ability>());
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    protected override void OnTriggerStay2D(Collider2D other)
     {
         HandleAshState(other.gameObject.GetComponent<Ability>());
     }
