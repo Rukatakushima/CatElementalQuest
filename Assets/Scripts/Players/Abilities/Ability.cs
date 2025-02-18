@@ -30,23 +30,24 @@ public abstract class Ability : MonoBehaviour
 
     public abstract void UseAbility();
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
-        if (elementalObject != null)
-        {
-            elementalObject.HandleInstantInteraction(this);
-        }
-    }
+    //для блуждения по воде и лаве
+    // private void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
+    //     if (elementalObject != null)
+    //     {
+    //         elementalObject.HandleInstantInteraction(this);
+    //     }
+    // }
 
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (!isAbilityActive) return;
+    // private void OnCollisionStay2D(Collision2D other)
+    // {
+    //     if (!isAbilityActive) return;
 
-        ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
-        if (elementalObject != null)
-        {
-            elementalObject.HandleContinuousInteraction(this);
-        }
-    }
+    //     ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
+    //     if (elementalObject != null)
+    //     {
+    //         elementalObject.HandleContinuousInteraction(this);
+    //     }
+    // }
 }

@@ -24,7 +24,7 @@ public abstract class ElementalObject : MonoBehaviour
 
     public abstract void HandleContinuousInteraction(Ability playerAbility);
 
-    protected virtual void HandleTriggerInteraction(Collider2D other) { }
+    // protected virtual void HandleTriggerInteraction(Collider2D other) { }
 
     protected virtual void ChangeState(ElementalObjectState newState)
     {
