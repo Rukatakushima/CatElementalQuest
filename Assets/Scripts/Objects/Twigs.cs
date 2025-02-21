@@ -77,7 +77,7 @@ public class Twigs : ElementalObject
     //     HandleAshState(other.gameObject.GetComponent<Ability>());
     // }
 
-    protected override void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         // HandleTriggerInteraction(other);
         HandleAshState(other.gameObject.GetComponent<Ability>());
