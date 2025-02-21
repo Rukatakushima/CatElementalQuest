@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8998710050337435631}
   - component: {fileID: 6643805732362427229}
   - component: {fileID: 576990967471096322}
-  - component: {fileID: 8012375830549234915}
+  - component: {fileID: 6102152032160315423}
   m_Layer: 0
   m_Name: Water
   m_TagString: Ground
@@ -119,9 +119,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 66efb24ed46044ab8a039599cbc47d7b, type: 3}
-  m_Color: {r: 0, g: 0.43529415, b: 0.7411765, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -131,7 +131,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8012375830549234915
+--- !u!114 &6102152032160315423
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  respawnManager: {fileID: 0}
+  - {fileID: 21300000, guid: 75198730b713d38479192f3aeecdb9df, type: 3}
+  - {fileID: 21300000, guid: a976739560e5f31489bc7c9c4a01a1fc, type: 3}

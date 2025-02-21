@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9166443221980182880}
-  - component: {fileID: 4768435419096405574}
   - component: {fileID: 809208804195150432}
   - component: {fileID: 2177383356129573062}
+  - component: {fileID: -9212716112591777088}
   m_Layer: 0
-  m_Name: Twigs
+  m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,22 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4768435419096405574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3378228390464232086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbbe027b710d51d4fb3f3e5c29ca7ce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateSprites:
-  - {fileID: 21300000, guid: 8ff00d308a5ffe343a454c31f1781d4a, type: 3}
-  - {fileID: 21300000, guid: 72a11a7ca4276824682e1d35cf45ba5d, type: 3}
-  - {fileID: 21300000, guid: 31731f49855786b4a88f76718b3a261e, type: 3}
 --- !u!212 &809208804195150432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -91,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 8ff00d308a5ffe343a454c31f1781d4a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fee8bfad01e77364bb0976cc1683395e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,3 +131,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.36, y: 7.36}
   m_EdgeRadius: 0
+--- !u!114 &-9212716112591777088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378228390464232086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cffb429ee21fe24cb51b004fd3b8127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateSprites:
+  - {fileID: 21300000, guid: fee8bfad01e77364bb0976cc1683395e, type: 3}
+  - {fileID: 21300000, guid: 7a2535d6a87daf948a43b7c42a4efc2d, type: 3}

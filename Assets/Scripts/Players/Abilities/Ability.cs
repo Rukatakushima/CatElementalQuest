@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Ability : MonoBehaviour
 {
@@ -6,17 +7,22 @@ public abstract class Ability : MonoBehaviour
     [SerializeField] private float abilityCooldown = 2f;
     private float abilityTimer = 0f;
 
+    public UnityEvent<bool> OnAbilityActiveChanged;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             isAbilityActive = true;
             UseAbility();
+            OnAbilityActiveChanged?.Invoke(true);
         }
 
         if (isAbilityActive)
             SetAbilityCooldown();
     }
+
+    public abstract void UseAbility();
 
     private void SetAbilityCooldown()
     {
@@ -25,28 +31,7 @@ public abstract class Ability : MonoBehaviour
         {
             isAbilityActive = false;
             abilityTimer = 0f;
+            OnAbilityActiveChanged?.Invoke(false);
         }
     }
-
-    public abstract void UseAbility();
-
-    // private void OnCollisionEnter2D(Collision2D other)
-    // {
-    //     ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
-    //     if (elementalObject != null)
-    //     {
-    //         elementalObject.HandleInstantInteraction(this);
-    //     }
-    // }
-
-    // private void OnCollisionStay2D(Collision2D other)
-    // {
-    //     if (!isAbilityActive) return;
-
-    //     ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
-    //     if (elementalObject != null)
-    //     {
-    //         elementalObject.HandleContinuousInteraction(this);
-    //     }
-    // }
 }
