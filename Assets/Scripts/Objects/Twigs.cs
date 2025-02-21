@@ -83,7 +83,7 @@ public class Twigs : ElementalObject
         HandleAshState(other.gameObject.GetComponent<Ability>());
     }
     
-    protected override void HandleStateChange(ElementalObjectState newState)
+    protected override void HandleStateChangeEvent(ElementalObjectState newState)
     {
         Debug.Log($"Состояние хвороста изменено на: {newState}");
     }

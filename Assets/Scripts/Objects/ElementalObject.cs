@@ -17,7 +17,7 @@ public abstract class ElementalObject : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         UpdateElementalObjectSprite();
-        OnStateChanged.AddListener(HandleStateChange);
+        OnStateChanged.AddListener(HandleStateChangeEvent);
     }
 
     public abstract void HandleInstantInteraction(Ability playerAbility);
@@ -39,5 +39,5 @@ public abstract class ElementalObject : MonoBehaviour
         spriteRenderer.sprite = stateSprites[(int)currentState];
     }
 
-    protected virtual void HandleStateChange(ElementalObjectState newState) => Debug.Log($"Состояние изменено на: {newState}");
+    protected virtual void HandleStateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние изменено на: {newState}");
 }
