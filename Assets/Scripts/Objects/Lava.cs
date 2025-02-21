@@ -28,10 +28,11 @@ public class Lava : DangerousElementalObject
         {
             Debug.Log("Водяной игрок потушил лаву");
             ChangeState(ElementalObjectState.SecondState);
+            GetComponent<Collider2D>().isTrigger = false;
         }
     }
 
-    protected override void HandleStateChange(ElementalObjectState newState)
+    protected override void HandleStateChangeEvent(ElementalObjectState newState)
     {
         Debug.Log($"Состояние лавы изменено на: {newState}");
     }

@@ -42,16 +42,18 @@ public class Water : DangerousElementalObject
             Debug.Log("Леденной игрок заморозил воду");
             // currentState = ElementalObjectState.SecondState;
             ChangeState(ElementalObjectState.SecondState);
+            GetComponent<Collider2D>().isTrigger = false;
         }
         else if (playerAbility is FireAbility && currentState == ElementalObjectState.SecondState)
         {
-            Debug.Log("Оненный игрок разморозил воду");
+            Debug.Log("Огненный игрок разморозил воду");
             // currentState = ElementalObjectState.FirstState;
             ChangeState(ElementalObjectState.FirstState);
+            GetComponent<Collider2D>().isTrigger = true;
         }
     }
-    
-    protected override void HandleStateChange(ElementalObjectState newState)
+
+    protected override void HandleStateChangeEvent(ElementalObjectState newState)
     {
         Debug.Log($"Состояние воды изменено на: {newState}");
     }

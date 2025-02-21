@@ -9,28 +9,32 @@ public abstract class DangerousElementalObject : ElementalObject
         base.Start();
         respawnManager = FindObjectOfType<RespawnManager>();
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        Ability playerAbility = other.gameObject.GetComponent<Ability>();
-        if (playerAbility != null)
+    /*
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            HandleInstantInteraction(playerAbility);
+            Ability playerAbility = other.gameObject.GetComponent<Ability>();
+            if (playerAbility != null)
+                HandleInstantInteraction(playerAbility);
         }
-    }
-
+    */
     private void OnCollisionStay2D(Collision2D other)
     {
         Ability playerAbility = other.gameObject.GetComponent<Ability>();
         if (playerAbility != null && playerAbility.isAbilityActive)
             HandleContinuousInteraction(playerAbility);
+    }
 
-        // if (!isAbilityActive) return;
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Ability playerAbility = collision.gameObject.GetComponent<Ability>();
+        if (playerAbility != null)
+            HandleInstantInteraction(playerAbility);
+    }
 
-        // ElementalObject elementalObject = other.gameObject.GetComponent<ElementalObject>();
-        // if (elementalObject != null)
-        // {
-        //     elementalObject.HandleContinuousInteraction(this);
-        // }
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        Ability playerAbility = collision.gameObject.GetComponent<Ability>();
+        if (playerAbility != null && playerAbility.isAbilityActive)
+            HandleContinuousInteraction(playerAbility);
     }
 }
