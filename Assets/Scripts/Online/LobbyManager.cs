@@ -5,7 +5,7 @@ using Photon.Realtime;
 using UnityEngine;
 using TMPro;
 
-public class LobbyManager : MonoBehaviour
+public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public GameObject roomPanel;
     public TMP_Text roomName;
@@ -24,41 +24,51 @@ public class LobbyManager : MonoBehaviour
         PhotonNetwork.JoinLobby();
     }
 
-    public void OnJoinedRoom()
+    public override void OnJoinedRoom()
     {
         roomPanel.SetActive(true);
         roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
         UpdatePlayersList();
     }
 
-    public void OnPlayerEnteredRoom(Player newPlayer)
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel("Game");
+    }
+
+    public void LeaveGame()
+    {
+        PhotonNetwork.LoadLevel("MainMenu");
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         UpdatePlayersList();
     }
 
-    public void OnPlayerLeftRoom(Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         UpdatePlayersList();
     }
 
     private void UpdatePlayersList()
-    {
-        ClearPlayersList();
-        if (PhotonNetwork.CurrentRoom == null) return;
+{
+    ClearPlayersList();
+    if (PhotonNetwork.CurrentRoom == null) return;
 
-        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
-        {
-            PlayerSelection newPlayerSelection = Instantiate(playerSelectionPrefab, playerSelectionParent);
-            playerSelectionsList.Add(newPlayerSelection);
-        }
-    }
-
-    private void ClearPlayersList()
+    foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
     {
-        foreach (PlayerSelection item in playerSelectionsList)
-        {
-            Destroy(item.gameObject);
-        }
-        playerSelectionsList.Clear();
+        PlayerSelection newPlayerSelection = Instantiate(playerSelectionPrefab, playerSelectionParent);
+        playerSelectionsList.Add(newPlayerSelection);
     }
+}
+
+private void ClearPlayersList()
+{
+    foreach (PlayerSelection item in playerSelectionsList)
+    {
+        Destroy(item.gameObject);
+    }
+    playerSelectionsList.Clear();
+}
 }

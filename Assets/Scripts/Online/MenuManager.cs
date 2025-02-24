@@ -11,10 +11,12 @@ public class MenuManager : MonoBehaviourPunCallbacks
     public TMP_InputField createInput;
     public TMP_InputField joinInput;
 
+    [SerializeField] private int maxPlayers;
+
     public void CreateRoom()
     {
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 5;
+        roomOptions.MaxPlayers = maxPlayers;
         PhotonNetwork.CreateRoom(createInput.text, roomOptions);
     }
 
@@ -25,6 +27,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Game");
+        PhotonNetwork.LoadLevel("Lobby");
     }
 }
