@@ -2,59 +2,64 @@ using UnityEngine;
 
 public class Water : DangerousElementalObject
 {
-    public override void HandleInstantInteraction(Ability playerAbility)
+    public override void GetInsideElement(Ability playerAbility)
     {
         if (currentState == ElementalObjectState.SecondState)
         {
             Debug.Log("Любой игрок безопасно проходит через лед.");
-            if (playerAbility is FireAbility)
-            {
-                Debug.Log("Оненный игрок безопасно проходит через воду.");
-                HandleContinuousInteraction(playerAbility);
-            }
+            SlipOnIce(playerAbility.gameObject);
+            // if (playerAbility is FireAbility)
+            // {
+            //     Debug.Log("Огненный игрок безопасно проходит через воду.");
+            //     InteractWithElement(playerAbility);
+            // }
         }
         else if (playerAbility is WaterAbility || playerAbility is IceAbility)
         {
             Debug.Log("Водный или ледяной игрок безопасно проходит через воду.");
         }
-        // else if (playerAbility is WaterAbility)
-        // {
-        //     Debug.Log("Водный игрок безопасно проходит через воду.");
-        // }
-        // else if (playerAbility is IceAbility)
-        // {
-        //     HandleContinuousInteraction(playerAbility);
-        //     Debug.Log("Ледяной игрок безопасно проходит через воду.");
-        // }
         else
-        {
-            Debug.Log("Игрок утонул!");
-            respawnManager.Respawn(playerAbility.gameObject);
-        }
+            DrownPlayer(playerAbility.gameObject);
     }
 
-    public override void HandleContinuousInteraction(Ability playerAbility)
+    public override void InteractWithElement(Ability playerAbility)
     {
         if (!playerAbility.isAbilityActive) return;
 
-        if (playerAbility is IceAbility && currentState == ElementalObjectState.FirstState)
-        {
-            Debug.Log("Леденной игрок заморозил воду");
-            // currentState = ElementalObjectState.SecondState;
-            ChangeState(ElementalObjectState.SecondState);
-            GetComponent<Collider2D>().isTrigger = false;
-        }
-        else if (playerAbility is FireAbility && currentState == ElementalObjectState.SecondState)
-        {
-            Debug.Log("Огненный игрок разморозил воду");
-            // currentState = ElementalObjectState.FirstState;
-            ChangeState(ElementalObjectState.FirstState);
-            GetComponent<Collider2D>().isTrigger = true;
-        }
+        if (playerAbility is IceAbility)
+            FreezeWater();
+        else if (playerAbility is FireAbility)
+            DefrostWater();
     }
 
-    protected override void HandleStateChangeEvent(ElementalObjectState newState)
+    private void FreezeWater()
     {
-        Debug.Log($"Состояние воды изменено на: {newState}");
+        if (currentState != ElementalObjectState.FirstState) return;
+
+        Debug.Log("Вода заморожена"); ;
+        ChangeState(ElementalObjectState.SecondState);
+        GetComponent<Collider2D>().isTrigger = false;
     }
+
+    private void DefrostWater()
+    {
+        if (currentState != ElementalObjectState.SecondState) return;
+
+        Debug.Log("Вода разморожена");
+        ChangeState(ElementalObjectState.FirstState);
+        GetComponent<Collider2D>().isTrigger = true;
+    }
+
+    private void DrownPlayer(GameObject player)
+    {
+        Debug.Log("Игрок утонул!");
+        respawnManager.Respawn(player);
+    }
+
+    private void SlipOnIce(GameObject player)
+    {
+        Debug.Log("Игрок скользит по льду!");
+    }
+
+    protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние воды изменено на: {newState}");
 }

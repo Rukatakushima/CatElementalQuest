@@ -9,32 +9,35 @@ public abstract class DangerousElementalObject : ElementalObject
         base.Start();
         respawnManager = FindObjectOfType<RespawnManager>();
     }
-    /*
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            Ability playerAbility = other.gameObject.GetComponent<Ability>();
-            if (playerAbility != null)
-                HandleInstantInteraction(playerAbility);
-        }
-    */
+
     private void OnCollisionStay2D(Collision2D other)
     {
+        Debug.Log("DEO collisioned");
         Ability playerAbility = other.gameObject.GetComponent<Ability>();
-        if (playerAbility != null && playerAbility.isAbilityActive)
-            HandleContinuousInteraction(playerAbility);
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        Ability playerAbility = collision.gameObject.GetComponent<Ability>();
         if (playerAbility != null)
-            HandleInstantInteraction(playerAbility);
+            GetInsideElement(playerAbility);
+
+        AbilityCollider abilityCollider = other.gameObject.GetComponent<AbilityCollider>();
+        if (abilityCollider != null && abilityCollider.abilityType.isAbilityActive)
+            InteractWithElement(abilityCollider.abilityType);
     }
 
     void OnTriggerStay2D(Collider2D collision)
     {
+        Debug.Log("DEO Triggered");
         Ability playerAbility = collision.gameObject.GetComponent<Ability>();
-        if (playerAbility != null && playerAbility.isAbilityActive)
-            HandleContinuousInteraction(playerAbility);
+        if (playerAbility != null)
+        {
+            GetInsideElement(playerAbility);
+            Debug.Log("GetInsideElement");
+        }
+
+        AbilityCollider abilityCollider = collision.gameObject.GetComponent<AbilityCollider>();
+        if (abilityCollider != null && abilityCollider.abilityType.isAbilityActive)
+        {
+            InteractWithElement(abilityCollider.abilityType);
+            Debug.Log("InteractWithElement");
+        }
+
     }
 }

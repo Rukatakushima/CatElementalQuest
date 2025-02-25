@@ -8,9 +8,9 @@ public class Twigs : ElementalObject
         UpdateElementalObjectSprite();
     }
 
-    public override void HandleInstantInteraction(Ability playerAbility) { }
+    public override void GetInsideElement(Ability playerAbility) { }
 
-    public override void HandleContinuousInteraction(Ability playerAbility)
+    public override void InteractWithElement(Ability playerAbility)
     {
         switch (currentState)
         {
@@ -83,7 +83,7 @@ public class Twigs : ElementalObject
         HandleAshState(other.gameObject.GetComponent<Ability>());
     }
     
-    protected override void HandleStateChangeEvent(ElementalObjectState newState)
+    protected override void StateChangeEvent(ElementalObjectState newState)
     {
         Debug.Log($"Состояние хвороста изменено на: {newState}");
     }
