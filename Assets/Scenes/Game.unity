@@ -384,7 +384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9166443221980182880, guid: df8cc73f49799804096f9a50d2623349, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7682655
+      value: 4.641734
       objectReference: {fileID: 0}
     - target: {fileID: 9166443221980182880, guid: df8cc73f49799804096f9a50d2623349, type: 3}
       propertyPath: m_LocalPosition.y
@@ -498,7 +498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9166443221980182880, guid: 07810abb27cbde342a5807a958072606, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8
+      value: 7.21
       objectReference: {fileID: 0}
     - target: {fileID: 9166443221980182880, guid: 07810abb27cbde342a5807a958072606, type: 3}
       propertyPath: m_LocalPosition.y
@@ -663,6 +663,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3432226590781954488, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
+      propertyPath: playerPrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432226590781954488, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
+      propertyPath: playerPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3906076095008310314, guid: 8c880934320ce2e429ef9844c695ada7, type: 3}
+    - target: {fileID: 3432226590781954488, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
+      propertyPath: playerPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 3906076095008310314, guid: 504022be940421649af732afae4fd49d, type: 3}
+    - target: {fileID: 3432226590781954488, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
+      propertyPath: playerPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 3906076095008310314, guid: c687e9b98edcb614f923e7286a8dd3ee, type: 3}
+    - target: {fileID: 3432226590781954488, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
+      propertyPath: playerPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 3906076095008310314, guid: cd6e9584a0693fd41b06ca2e30917ef2, type: 3}
+    - target: {fileID: 3432226590781954488, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
+      propertyPath: playerPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 3906076095008310314, guid: 8d2a047e60cf1444094c1f8212969dda, type: 3}
     - target: {fileID: 4290511258870923602, guid: deca2216d024a114d98cc02e7770a31d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
