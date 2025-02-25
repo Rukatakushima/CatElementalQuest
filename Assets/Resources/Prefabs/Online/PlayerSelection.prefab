@@ -133,6 +133,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14661cdc794aed47b86d55178387c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNickname: {fileID: 6539294653497734849}
+  highlightColor: {r: 0.59896886, g: 0.5896226, b: 1, a: 0.6666667}
+  leftArrowButton: {fileID: 4960551837807208019}
+  rightArrowButton: {fileID: 4879836446491503859}
+  playerAvatar: {fileID: 2404426615496139829}
+  avatars:
+  - {fileID: -217546510, guid: da58af5936e310b4f9e89c57cb95eff7, type: 3}
+  - {fileID: -645812487, guid: da58af5936e310b4f9e89c57cb95eff7, type: 3}
+  - {fileID: -1636440140, guid: da58af5936e310b4f9e89c57cb95eff7, type: 3}
+  - {fileID: -146079508, guid: da58af5936e310b4f9e89c57cb95eff7, type: 3}
+  - {fileID: 902240026, guid: da58af5936e310b4f9e89c57cb95eff7, type: 3}
 --- !u!1 &4879836446491503859
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +263,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4796148865398895003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8856281570863480109}
+        m_TargetAssemblyTypeName: PlayerSelection, Assembly-CSharp
+        m_MethodName: OnClickRightArrow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4941587820578440516
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +544,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6224717006882544764}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8856281570863480109}
+        m_TargetAssemblyTypeName: PlayerSelection, Assembly-CSharp
+        m_MethodName: OnClickLeftArrow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5485403238696552341
 GameObject:
   m_ObjectHideFlags: 0

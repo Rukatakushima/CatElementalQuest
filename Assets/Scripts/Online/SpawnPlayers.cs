@@ -1,9 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class SpawnPlayers : MonoBehaviour
+public class PlayerSpawner : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject[] playerPrefabs;
     public float minX, minY, maxX, maxY;
 
     void Start()
@@ -14,6 +14,7 @@ public class SpawnPlayers : MonoBehaviour
     public void SpawnPlayer()
     {
         Vector2 randomPosition = new Vector2(Random.Range(minX, minY), Random.Range(maxX, maxY));
-        PhotonNetwork.Instantiate(player.name, randomPosition, Quaternion.identity);
+        GameObject playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
+        PhotonNetwork.Instantiate(playerToSpawn.name, randomPosition, Quaternion.identity);
     }
 }

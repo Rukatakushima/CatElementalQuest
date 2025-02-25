@@ -6,7 +6,7 @@ public abstract class Ability : MonoBehaviour
     private Movement playerMovement;
 
     [SerializeField] private GameObject abilityColliderPrefab;
-    [SerializeField] private Vector2 abilityPositionOffset;
+    [SerializeField] private Vector2 abilityPositionOffset = new Vector2(2f, 0f);
     private GameObject abilityCollider;
 
     public bool isAbilityActive { get; private set; } = false;

@@ -15,6 +15,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     // Update is called once per frame
     public override void OnConnectedToMaster()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         SceneManager.LoadScene("MainMenu");
     }
 }
