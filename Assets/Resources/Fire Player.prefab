@@ -76,6 +76,9 @@ MonoBehaviour:
   moveSpeed: 4
   jumpForce: 4
   isFacingRight: 1
+  slideForce: 8
+  maxSlideSpeed: 15
+  slideDecay: 0.95
 --- !u!114 &-5928758294944910685
 MonoBehaviour:
   m_ObjectHideFlags: 0

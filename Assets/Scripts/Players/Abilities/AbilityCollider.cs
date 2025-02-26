@@ -9,13 +9,13 @@ public class AbilityCollider : MonoBehaviour
 
     private void Awake() => abilityCollider = GetComponent<Collider2D>();
 
-    private void Update()
-    {
-        if (abilityType.isAbilityActive)
-            CheckForElementalObjects();
-    }
+    // private void Update()
+    // {
+    //     if (abilityType.isAbilityActive)
+    //         CheckForElementalObjects();
+    // }
 
-    private void CheckForElementalObjects()
+    public void CheckForElementalObjects()
     {
         Collider2D[] results = new Collider2D[10];
         ContactFilter2D filter = new ContactFilter2D().NoFilter(); // Фильтр для всех коллайдеров

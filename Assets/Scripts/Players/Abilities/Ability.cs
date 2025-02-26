@@ -7,7 +7,8 @@ public abstract class Ability : MonoBehaviour
 
     [SerializeField] private GameObject abilityColliderPrefab;
     [SerializeField] private Vector2 abilityPositionOffset = new Vector2(2f, 0f);
-    private GameObject abilityCollider;
+    private GameObject abilityObject;
+    private AbilityCollider abilityCollider;
 
     public bool isAbilityActive { get; private set; } = false;
     [SerializeField] private float abilityCooldown = 2f;
@@ -18,13 +19,14 @@ public abstract class Ability : MonoBehaviour
     private void Awake()
     {
         playerMovement = GetComponent<Movement>();
-        abilityCollider = Instantiate(abilityColliderPrefab);
+        abilityObject = Instantiate(abilityColliderPrefab);
+        abilityCollider = abilityObject.GetComponent<AbilityCollider>();
     }
 
     private void Start()
     {
-        abilityCollider.GetComponent<AbilityCollider>().abilityType = this;
-        abilityCollider.SetActive(false);
+        abilityCollider.abilityType = this;
+        abilityObject.SetActive(false);
     }
 
     private void Update()
@@ -39,7 +41,7 @@ public abstract class Ability : MonoBehaviour
     private void CreateAbility()
     {
         if (abilityTimer != 0) return;
-        
+
         SetAbilityCollider();
         UseAbility();
     }
@@ -47,15 +49,15 @@ public abstract class Ability : MonoBehaviour
     private void SetAbilityCollider()
     {
         SetColliderActive(true);
-
-        abilityCollider.transform.position = playerMovement.isFacingRight ?
+        abilityObject.transform.position = playerMovement.isFacingRight ?
             (Vector2)transform.position + abilityPositionOffset : (Vector2)transform.position - abilityPositionOffset;
+        abilityCollider.CheckForElementalObjects();
     }
 
     private void SetColliderActive(bool isActive)
     {
         isAbilityActive = isActive;
-        abilityCollider.SetActive(isActive);
+        abilityObject.SetActive(isActive);
     }
 
     public abstract void UseAbility();
