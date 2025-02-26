@@ -20,6 +20,14 @@ public class PlayerSelection : MonoBehaviourPunCallbacks
     private void Awake()
     {
         backgroundImage = GetComponent<Image>();
+        SetDefaultAvatar();
+    }
+
+    private void SetDefaultAvatar()
+    {
+        playerAvatar.sprite = avatars[0];
+        playerProperties["playerAvatar"] = 0;
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     public void SetPlayerInfo(Player player)
@@ -56,7 +64,8 @@ public class PlayerSelection : MonoBehaviourPunCallbacks
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable dictionaryEntries)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer,
+                                                  ExitGames.Client.Photon.Hashtable dictionaryEntries)
     {
         if (player == targetPlayer)
             UpdatePlayerSelection(targetPlayer);
