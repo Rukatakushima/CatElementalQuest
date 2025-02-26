@@ -12,5 +12,5 @@ public class WindAbilityCollider : AbilityCollider
         }
     }
 
-    protected override void OnTriggerStay2D(Collider2D other) { }
+    // protected override void OnTriggerStay2D(Collider2D other) { }
 }

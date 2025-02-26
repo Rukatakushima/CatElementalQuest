@@ -10,6 +10,12 @@ public class Movement : MonoBehaviour
     private bool isGrounded, previousFacingRight;
     public bool isFacingRight = true;
 
+    private bool isSliding = false;
+    [SerializeField] private float slideForce = 8f;
+    [SerializeField] private float maxSlideSpeed = 25f;
+    [SerializeField] private float slideDecay = 0.95f;
+    private Vector2 slideDirection;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,6 +41,14 @@ public class Movement : MonoBehaviour
 
             UpdateFacingDirection();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isSliding)
+            ApplySlideForce();
+        else if (slideDirection.magnitude > 0.1f)
+            ApplySlideDecay();
     }
 
     private void Move()
@@ -83,5 +97,34 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = false;
+    }
+
+    public void StartSliding(float slideForce)
+    {
+        isSliding = true;
+        this.slideForce = slideForce;
+        slideDirection = rb.velocity.normalized;
+    }
+
+    public void StopSliding() => isSliding = false;
+
+    private void ApplySlideForce()
+    {
+        rb.AddForce(slideDirection * slideForce, ForceMode2D.Force);
+
+        if (rb.velocity.magnitude > maxSlideSpeed)
+            rb.velocity = rb.velocity.normalized * maxSlideSpeed;
+    }
+
+    private void ApplySlideDecay()
+    {
+        slideDirection *= slideDecay;
+        rb.velocity = slideDirection * rb.velocity.magnitude;
+
+        if (slideDirection.magnitude <= 0.1f)
+        {
+            slideDirection = Vector2.zero;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
     }
 }

@@ -43,5 +43,5 @@ public class Stone : ElementalObject
         // UpdateElementalObjectSprite();
     }
 
-    protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние хвороста изменено на: {newState}");
+    protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние камня изменено на: {newState}");
 }

@@ -189,6 +189,7 @@ MonoBehaviour:
   OnAbilityActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  startAbilityPosition: {x: 0, y: 0}
 --- !u!1 &4450939335743788259
 GameObject:
   m_ObjectHideFlags: 0

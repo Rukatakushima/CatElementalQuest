@@ -15,8 +15,6 @@ public abstract class Ability : MonoBehaviour
 
     public UnityEvent<bool> OnAbilityActiveChanged;
 
-    [SerializeField] private Vector2 startAbilityPosition;
-
     private void Awake()
     {
         playerMovement = GetComponent<Movement>();
@@ -26,8 +24,7 @@ public abstract class Ability : MonoBehaviour
     private void Start()
     {
         abilityCollider.GetComponent<AbilityCollider>().abilityType = this;
-        // abilityCollider.SetActive(false);
-        abilityCollider.transform.position = startAbilityPosition;
+        abilityCollider.SetActive(false);
     }
 
     private void Update()
@@ -41,6 +38,8 @@ public abstract class Ability : MonoBehaviour
 
     private void CreateAbility()
     {
+        if (abilityTimer != 0) return;
+        
         SetAbilityCollider();
         UseAbility();
     }
@@ -66,9 +65,7 @@ public abstract class Ability : MonoBehaviour
         abilityTimer += Time.deltaTime;
         if (abilityTimer >= abilityCooldown)
         {
-            // isAbilityActive = false;
-            // SetColliderActive(false);
-            abilityCollider.transform.position = startAbilityPosition;
+            SetColliderActive(false);
             abilityTimer = 0f;
             OnAbilityActiveChanged?.Invoke(false);
         }

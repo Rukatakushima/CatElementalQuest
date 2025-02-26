@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Water : DangerousElementalObject
 {
+    [SerializeField] private float slideForce = 25f;
+
     public override void GetInsideElement(Ability playerAbility)
     {
         if (currentState == ElementalObjectState.SecondState)
@@ -58,7 +60,23 @@ public class Water : DangerousElementalObject
 
     private void SlipOnIce(GameObject player)
     {
-        Debug.Log("Игрок скользит по льду!");
+        Movement playerMovement = player.GetComponent<Movement>();
+        if (playerMovement == null) return;
+
+        // Vector2 slideDirection = playerMovement.GetComponent<Rigidbody2D>().velocity.normalized;
+        playerMovement.StartSliding(slideForce);
+        Debug.Log("Игрок начал скользить по льду");
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (currentState != ElementalObjectState.SecondState) return;
+
+        Movement playerMovement = collision.gameObject.GetComponent<Movement>();
+        if (playerMovement == null) return;
+
+        playerMovement.StopSliding();
+        Debug.Log("Игрок перестал скользить по льду");
     }
 
     protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние воды изменено на: {newState}");
