@@ -4,6 +4,7 @@ using TMPro;
 public class RoomSelection : MonoBehaviour
 {
     public TMP_Text roomName;
+    [SerializeField] private string joinRoomTitle = "Join room: ";
 
     private MenuManager menuManager;
 
@@ -14,11 +15,13 @@ public class RoomSelection : MonoBehaviour
 
     public void SetRoomName(string roomName)
     {
-        this.roomName.text = "Join room: " + roomName;
+        this.roomName.text = joinRoomTitle + roomName;
     }
 
     public void OnClickJoinRoom()
     {
-        menuManager.JoinRoom(roomName.text);
+        string roomNameOnly = roomName.text.Replace(joinRoomTitle, "");
+        menuManager.JoinRoom(roomNameOnly);
+        // menuManager.JoinRoom(roomName.text);
     }
 }

@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
     [SerializeField] private string defaultNickname = "Purrlayer";
     public TMP_InputField nicknameInput;
     public TMP_InputField createRoomInput;
-    public TMP_InputField joinRoomInput;
+    // public TMP_InputField joinRoomInput;
 
     public Transform roomSelectionParent;
     public RoomSelection roomSelectionPrefab;
