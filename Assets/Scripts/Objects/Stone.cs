@@ -8,9 +8,9 @@ public class Stone : ElementalObject
         UpdateElementalObjectSprite();
     }
 
-    public override void HandleInstantInteraction(Ability playerAbility) { }
+    public override void GetInsideElement(Ability playerAbility) { }
 
-    public override void HandleContinuousInteraction(Ability playerAbility)
+    public override void InteractWithElement(Ability playerAbility)
     {
         if (playerAbility is EarthAbility)
         {
@@ -43,5 +43,5 @@ public class Stone : ElementalObject
         // UpdateElementalObjectSprite();
     }
 
-    protected override void HandleStateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние хвороста изменено на: {newState}");
+    protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние камня изменено на: {newState}");
 }

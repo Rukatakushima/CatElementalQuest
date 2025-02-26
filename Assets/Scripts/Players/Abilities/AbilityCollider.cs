@@ -4,65 +4,53 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class AbilityCollider : MonoBehaviour
 {
-    // private Transform player;
     public Ability abilityType;
+    private Collider2D abilityCollider;
 
-    // private Movement playerMovement;
-    // [SerializeField] private Vector2 rightPosition, leftPosition;
+    private void Awake() => abilityCollider = GetComponent<Collider2D>();
 
-    // private bool isPositionFixed { get; set; } = false;
-    // private Vector2 fixedPosition { get; set; }
-
-    // private Collider2D abilityCollider;
-    // private SpriteRenderer abilitySpriteRenderer;
-
-    // private void Awake()
-    // {
-    //     // abilityCollider = GetComponent<Collider2D>();
-    //     // abilitySpriteRenderer = GetComponent<SpriteRenderer>();
-
-    //     // player = transform.parent;
-    //     // playerAbility = player.GetComponentInParent<Ability>();
-    //     // playerMovement = player.GetComponentInParent<Movement>();
-
-    //     playerAbility.OnAbilityActiveChanged.AddListener(SetColliderActive);
-    // }
-
-    // private void Start() => SetColliderActive(false);
-
-    // private void Update() => UpdatePosition();
-
-    // private void UpdatePosition()
-    // {
-    //     if (!isPositionFixed)
-    //     {
-    //         Vector2 newPosition = playerMovement.isFacingRight ? rightPosition : leftPosition;
-
-    //         if ((Vector2)transform.position != newPosition)
-    //             transform.localPosition = newPosition;
-    //     }
-    //     else
-    //         transform.position = fixedPosition;
-    // }
-
-    protected virtual void OnTriggerEnter2D(Collider2D other)
+    private void Update()
     {
-        ElementalObject elementalObject = other.GetComponent<ElementalObject>();
-        Debug.Log("Ability triggered. elementalObject: ");
-        Debug.Log(elementalObject);
-
-        if (elementalObject != null && abilityType.isAbilityActive)
-            elementalObject.HandleContinuousInteraction(abilityType);
+        if (abilityType.isAbilityActive)
+            CheckForElementalObjects();
     }
 
-    // private void SetColliderActive(bool isActive)
-    // {
-    //     this.gameObject.SetActive(isActive);
-    //     // abilitySpriteRenderer.enabled = isActive;
-    //     // abilityCollider.enabled = isActive;
+    private void CheckForElementalObjects()
+    {
+        Collider2D[] results = new Collider2D[10];
+        ContactFilter2D filter = new ContactFilter2D().NoFilter(); // Фильтр для всех коллайдеров
 
-    //     // isPositionFixed = isActive;
-    //     // if (isPositionFixed)
-    //     //     fixedPosition = transform.position;
-    // }
+        int collisionCunt = abilityCollider.OverlapCollider(filter, results);
+
+        for (int i = 0; i < collisionCunt; i++)
+        {
+            Collider2D other = results[i];
+            Debug.Log($"Обнаружено пересечение с объектом: {other.name}");
+
+            ElementalObject elementalObject = other.GetComponent<ElementalObject>();
+
+            if (elementalObject != null)
+            {
+                Debug.Log("Обрабатываем взаимодействие с ElementalObject " + other);
+                elementalObject.InteractWithElement(abilityType);
+
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /*
+    protected void OnTriggerStay2D(Collider2D other)
+    {
+        Debug.Log($"OnTriggerStay2D вызван с объектом: {other.name}");
+
+        ElementalObject elementalObject = other.GetComponent<ElementalObject>();
+
+        if (elementalObject != null && abilityType.isAbilityActive)
+        {
+            Debug.Log("Обрабатываем взаимодействие с ElementalObject " + other);
+            elementalObject.InteractWithElement(abilityType);
+        }
+    }
+    */
 }

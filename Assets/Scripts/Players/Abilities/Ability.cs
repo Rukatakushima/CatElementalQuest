@@ -38,6 +38,8 @@ public abstract class Ability : MonoBehaviour
 
     private void CreateAbility()
     {
+        if (abilityTimer != 0) return;
+        
         SetAbilityCollider();
         UseAbility();
     }
@@ -63,7 +65,6 @@ public abstract class Ability : MonoBehaviour
         abilityTimer += Time.deltaTime;
         if (abilityTimer >= abilityCooldown)
         {
-            // isAbilityActive = false;
             SetColliderActive(false);
             abilityTimer = 0f;
             OnAbilityActiveChanged?.Invoke(false);

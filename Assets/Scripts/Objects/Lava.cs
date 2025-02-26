@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Lava : DangerousElementalObject
 {
-    public override void HandleInstantInteraction(Ability playerAbility)
+    public override void GetInsideElement(Ability playerAbility)
     {
         if (currentState == ElementalObjectState.SecondState)
         {
@@ -14,28 +14,33 @@ public class Lava : DangerousElementalObject
             Debug.Log("Огненный игрок безопасно проходит через лаву.");
         }
         else
-        {
-            Debug.Log("Игрок сгорел!");
-            respawnManager.Respawn(playerAbility.gameObject);
-        }
+            BurnPlayer(playerAbility.gameObject);
     }
 
-    public override void HandleContinuousInteraction(Ability playerAbility)
+    public override void InteractWithElement(Ability playerAbility)
     {
         if (!playerAbility.isAbilityActive) return;
 
-        if (playerAbility is WaterAbility && currentState == ElementalObjectState.FirstState)
-        {
-            Debug.Log("Водяной игрок потушил лаву");
-            ChangeState(ElementalObjectState.SecondState);
-            GetComponent<Collider2D>().isTrigger = false;
-        }
+        if (playerAbility is WaterAbility)
+            ExtinguishFire();
     }
 
-    protected override void HandleStateChangeEvent(ElementalObjectState newState)
+    public void ExtinguishFire()
     {
-        Debug.Log($"Состояние лавы изменено на: {newState}");
+        if (currentState != ElementalObjectState.FirstState) return;
+
+        Debug.Log("Водяной игрок потушил лаву");
+        ChangeState(ElementalObjectState.SecondState);
+        GetComponent<Collider2D>().isTrigger = false;
     }
+
+    public void BurnPlayer(GameObject player)
+    {
+        Debug.Log("Игрок сгорел!");
+        respawnManager.Respawn(player);
+    }
+
+    protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние лавы изменено на: {newState}");
 }
 /*
 
