@@ -9,6 +9,7 @@ public class Water : DangerousElementalObject
         if (currentState == ElementalObjectState.SecondState)
         {
             Debug.Log("Любой игрок безопасно проходит через лед.");
+            if (playerAbility is IceAbility) return;
             SlipOnIce(playerAbility.gameObject);
             // if (playerAbility is FireAbility)
             // {
