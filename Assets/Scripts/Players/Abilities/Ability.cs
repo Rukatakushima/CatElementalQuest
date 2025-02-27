@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 
-public abstract class Ability : MonoBehaviour
+public abstract class Ability : MonoBehaviourPunCallbacks
 {
     private Movement playerMovement;
 
@@ -9,6 +10,7 @@ public abstract class Ability : MonoBehaviour
     [SerializeField] private Vector2 abilityPositionOffset = new Vector2(2f, 0f);
     private GameObject abilityObject;
     private AbilityCollider abilityCollider;
+    [SerializeField] private Sprite abilitySprite;
 
     public bool isAbilityActive { get; private set; } = false;
     [SerializeField] private float abilityCooldown = 2f;
@@ -16,22 +18,27 @@ public abstract class Ability : MonoBehaviour
 
     public UnityEvent<bool> OnAbilityActiveChanged;
 
-    private void Awake()
-    {
-        playerMovement = GetComponent<Movement>();
-        abilityObject = Instantiate(abilityColliderPrefab);
-        abilityCollider = abilityObject.GetComponent<AbilityCollider>();
-    }
+    private void Awake() => playerMovement = GetComponent<Movement>();
 
-    private void Start()
-    {
-        abilityCollider.abilityType = this;
-        abilityObject.SetActive(false);
-    }
+    // private void Start()
+    // {
+    //     // if (photonView.IsMine)
+    //     // {
+    //     // abilityObject = PhotonNetwork.Instantiate(abilityColliderPrefab.name, Vector3.zero, Quaternion.identity);
+    //     abilityObject = Instantiate(abilityColliderPrefab);
+    //     abilityCollider = abilityObject.GetComponent<AbilityCollider>();
+    //     abilityCollider.GetComponent<SpriteRenderer>().sprite = abilitySprite;
+    //     abilityCollider.abilityType = this;
+    //     abilityObject.SetActive(false);
+    //     // }
+    // }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        // if (!photonView.IsMine) return;
+
+        // if (Input.GetKeyDown(KeyCode.E))
+        if (photonView.IsMine && Input.GetKeyDown(KeyCode.E))
             CreateAbility();
 
         if (isAbilityActive)
@@ -42,8 +49,29 @@ public abstract class Ability : MonoBehaviour
     {
         if (abilityTimer != 0) return;
 
+        photonView.RPC("RPC_CreateAbility", RpcTarget.All);
+        // SetAbilityCollider();
+        // UseAbility();
+    }
+
+    [PunRPC]
+    public void RPC_CreateAbility()
+    {
+        Debug.Log("RPC_CreateAbility вызван");
+        if (abilityObject == null)
+            CreateNewAbilityObject();
+
         SetAbilityCollider();
         UseAbility();
+    }
+
+    private void CreateNewAbilityObject()
+    {
+        abilityObject = PhotonNetwork.Instantiate(abilityColliderPrefab.name, Vector3.zero, Quaternion.identity);
+        abilityCollider = abilityObject.GetComponent<AbilityCollider>();
+        abilityCollider.GetComponent<SpriteRenderer>().sprite = abilitySprite;
+        abilityCollider.abilityType = this;
+        abilityObject.SetActive(false);
     }
 
     private void SetAbilityCollider()

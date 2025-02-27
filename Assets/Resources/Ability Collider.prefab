@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8707878594155464704}
   - component: {fileID: 7258970604431350750}
   - component: {fileID: 3184276755158541416}
-  - component: {fileID: -2387176646855653326}
-  m_Layer: 3
-  m_Name: Wind Ability Collider
+  - component: {fileID: 7654054112557336569}
+  - component: {fileID: 8099112909355242354}
+  m_Layer: 0
+  m_Name: Ability Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +122,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &-2387176646855653326
+--- !u!114 &7654054112557336569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +131,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 6578508587520018104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3c6564ce6438447b847fd4ae7bf2b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 702f390addbe9bb41b8fab5d8f67ee54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   abilityType: {fileID: 0}
+--- !u!114 &8099112909355242354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578508587520018104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

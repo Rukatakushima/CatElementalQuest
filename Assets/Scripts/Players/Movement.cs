@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 public class Movement : MonoBehaviour
 {
-    PhotonView view;
+    private PhotonView view;
     private Rigidbody2D rb;
     private Transform childTransform;
     public float moveSpeed, jumpForce;
@@ -22,8 +22,6 @@ public class Movement : MonoBehaviour
         view = GetComponent<PhotonView>();
 
         childTransform = transform.Find("PlayerSprite");
-        if (childTransform == null)
-            Debug.LogError("PlayerSprite (transform) wasn't found");
     }
 
     private void Start()
@@ -36,10 +34,9 @@ public class Movement : MonoBehaviour
     {
         if (view.IsMine)
         {
+            UpdateFacingDirection();
             Move();
             Jump();
-
-            UpdateFacingDirection();
         }
     }
 
@@ -68,11 +65,29 @@ public class Movement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         if (horizontalInput > 0)
-            isFacingRight = true;
-
+        {
+            if (!isFacingRight)
+            {
+                isFacingRight = true;
+                view.RPC("RPC_UpdateFacingDirection", RpcTarget.All, isFacingRight);
+            }
+        }
         else if (horizontalInput < 0)
-            isFacingRight = false;
+        {
+            if (isFacingRight)
+            {
+                isFacingRight = false;
+                view.RPC("RPC_UpdateFacingDirection", RpcTarget.All, isFacingRight);
+            }
+        }
 
+        FlipSprite();
+    }
+
+    [PunRPC]
+    private void RPC_UpdateFacingDirection(bool facingRight)
+    {
+        isFacingRight = facingRight;
         FlipSprite();
     }
 

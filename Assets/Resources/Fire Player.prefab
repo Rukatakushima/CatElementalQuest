@@ -188,6 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityColliderPrefab: {fileID: 6578508587520018104, guid: 3c8efc30c67a4b84fb2f96e2bbfa50ef, type: 3}
   abilityPositionOffset: {x: 2, y: 0}
+  abilitySprite: {fileID: 21300000, guid: 9d295c687d26ba845a4e02dabb72179b, type: 3}
   abilityCooldown: 2
   OnAbilityActiveChanged:
     m_PersistentCalls:
@@ -265,7 +266,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3a3b4c020025b634a9f96ac0d8d326c9, type: 3}
+  m_Sprite: {fileID: -645812487, guid: da58af5936e310b4f9e89c57cb95eff7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

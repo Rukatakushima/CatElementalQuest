@@ -1,19 +1,15 @@
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class AbilityCollider : MonoBehaviour
+[RequireComponent(typeof(PhotonView))]
+public class AbilityCollider : MonoBehaviourPunCallbacks
 {
     public Ability abilityType;
     private Collider2D abilityCollider;
 
     private void Awake() => abilityCollider = GetComponent<Collider2D>();
-
-    // private void Update()
-    // {
-    //     if (abilityType.isAbilityActive)
-    //         CheckForElementalObjects();
-    // }
 
     public void CheckForElementalObjects()
     {
@@ -31,26 +27,35 @@ public class AbilityCollider : MonoBehaviour
 
             if (elementalObject != null)
             {
-                Debug.Log("Обрабатываем взаимодействие с ElementalObject " + other);
-                elementalObject.InteractWithElement(abilityType);
+                PhotonView elementalPhotonView = elementalObject.GetComponent<PhotonView>();
+                if (elementalPhotonView != null)
+                {
+                    Debug.Log($"Передаём ViewID: {elementalPhotonView.ViewID}");
+                    photonView.RPC("RPC_InteractWithElement", RpcTarget.All, elementalPhotonView.ViewID);
+                }
+                // photonView.RPC("RPC_InteractWithElement", RpcTarget.All, elementalObject.photonView.ViewID);
+                
+                // elementalObject.InteractWithElement(abilityType);
 
                 gameObject.SetActive(false);
+                Debug.Log("Обрабатываем взаимодействие с ElementalObject " + other);
             }
         }
     }
 
-    /*
-    protected void OnTriggerStay2D(Collider2D other)
+    [PunRPC]
+    public void RPC_InteractWithElement(int elementalObjectViewID)
     {
-        Debug.Log($"OnTriggerStay2D вызван с объектом: {other.name}");
-
-        ElementalObject elementalObject = other.GetComponent<ElementalObject>();
-
-        if (elementalObject != null && abilityType.isAbilityActive)
+        Debug.Log("elementalObjectViewID = " + elementalObjectViewID);
+        PhotonView elementalPhotonView = PhotonView.Find(elementalObjectViewID);
+        Debug.Log("elementalPhotonView = " + elementalPhotonView);
+        if (elementalPhotonView != null)
         {
-            Debug.Log("Обрабатываем взаимодействие с ElementalObject " + other);
-            elementalObject.InteractWithElement(abilityType);
+            ElementalObject elementalObject = elementalPhotonView.GetComponent<ElementalObject>();
+            if (elementalObject != null)
+            {
+                elementalObject.InteractWithElement(abilityType);
+            }
         }
     }
-    */
 }
