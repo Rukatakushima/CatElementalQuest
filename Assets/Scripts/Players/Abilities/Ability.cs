@@ -16,7 +16,7 @@ public abstract class Ability : MonoBehaviourPunCallbacks
     [SerializeField] private float abilityCooldown = 2f;
     private float abilityTimer = 0f;
 
-    public UnityEvent<bool> OnAbilityActiveChanged;
+    public UnityEvent OnAbilityActive;
 
     private void Awake()
     {
@@ -44,6 +44,7 @@ public abstract class Ability : MonoBehaviourPunCallbacks
     {
         SetAbilityCollider();
         UseAbility();
+        OnAbilityActive?.Invoke();
     }
 
     private void CreateNewAbilityObject()
@@ -82,7 +83,7 @@ public abstract class Ability : MonoBehaviourPunCallbacks
         {
             SetColliderActive(false);
             abilityTimer = 0f;
-            OnAbilityActiveChanged?.Invoke(false);
+            // OnAbilityActiveChanged?.Invoke(false);
         }
     }
 }
