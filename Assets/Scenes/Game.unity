@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava
       objectReference: {fileID: 0}
+    - target: {fileID: 8225083285436861411, guid: b5bbdf2e22b3d934c808b9a095d9d30d, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8998710050337435631, guid: b5bbdf2e22b3d934c808b9a095d9d30d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.47
@@ -285,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1533438121033362963, guid: 017162bf02f930843bac2d2e817800c2, type: 3}
+  zPosition: -10
   speed: 4
 --- !u!1 &1334984726
 GameObject:
@@ -382,6 +387,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone
       objectReference: {fileID: 0}
+    - target: {fileID: 8790311787957624010, guid: df8cc73f49799804096f9a50d2623349, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9166443221980182880, guid: df8cc73f49799804096f9a50d2623349, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.151734
@@ -439,6 +448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 8225083285436861411, guid: f5de2b3702bb9a6489d216feeba0f164, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8998710050337435631, guid: f5de2b3702bb9a6489d216feeba0f164, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.959999
@@ -495,6 +508,10 @@ PrefabInstance:
     - target: {fileID: 3378228390464232086, guid: 07810abb27cbde342a5807a958072606, type: 3}
       propertyPath: m_Name
       value: Twigs
+      objectReference: {fileID: 0}
+    - target: {fileID: 8790311787957624010, guid: 07810abb27cbde342a5807a958072606, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9166443221980182880, guid: 07810abb27cbde342a5807a958072606, type: 3}
       propertyPath: m_LocalPosition.x
@@ -607,8 +624,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 911395013323507803, guid: 030d488cfe97bf84da9c7eefd97498d0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 41.985462
+      objectReference: {fileID: 0}
+    - target: {fileID: 911395013323507803, guid: 030d488cfe97bf84da9c7eefd97498d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.34
+      value: 14.5942
       objectReference: {fileID: 0}
     - target: {fileID: 911395013323507803, guid: 030d488cfe97bf84da9c7eefd97498d0, type: 3}
       propertyPath: m_LocalPosition.y

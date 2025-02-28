@@ -11,6 +11,8 @@ public class AbilityCollider : MonoBehaviourPunCallbacks
 
     private void Awake() => abilityCollider = GetComponent<Collider2D>();
 
+    private void Update() => CheckForElementalObjects();
+
     public void CheckForElementalObjects()
     {
         Collider2D[] results = new Collider2D[10];
@@ -26,36 +28,7 @@ public class AbilityCollider : MonoBehaviourPunCallbacks
             ElementalObject elementalObject = other.GetComponent<ElementalObject>();
 
             if (elementalObject != null)
-            {
-                PhotonView elementalPhotonView = elementalObject.GetComponent<PhotonView>();
-                if (elementalPhotonView != null)
-                {
-                    Debug.Log($"Передаём ViewID: {elementalPhotonView.ViewID}");
-                    photonView.RPC("RPC_InteractWithElement", RpcTarget.All, elementalPhotonView.ViewID);
-                }
-                // photonView.RPC("RPC_InteractWithElement", RpcTarget.All, elementalObject.photonView.ViewID);
-                
-                // elementalObject.InteractWithElement(abilityType);
-
-                gameObject.SetActive(false);
-                Debug.Log("Обрабатываем взаимодействие с ElementalObject " + other);
-            }
-        }
-    }
-
-    [PunRPC]
-    public void RPC_InteractWithElement(int elementalObjectViewID)
-    {
-        Debug.Log("elementalObjectViewID = " + elementalObjectViewID);
-        PhotonView elementalPhotonView = PhotonView.Find(elementalObjectViewID);
-        Debug.Log("elementalPhotonView = " + elementalPhotonView);
-        if (elementalPhotonView != null)
-        {
-            ElementalObject elementalObject = elementalPhotonView.GetComponent<ElementalObject>();
-            if (elementalObject != null)
-            {
                 elementalObject.InteractWithElement(abilityType);
-            }
         }
     }
 }

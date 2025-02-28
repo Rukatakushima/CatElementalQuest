@@ -11,10 +11,7 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
     protected SpriteRenderer spriteRenderer;
     [SerializeField] protected Sprite[] stateSprites;
 
-    protected virtual void Awake()
-    {
-        OnStateChanged = new UnityEvent<ElementalObjectState>(); // Инициализация события
-    }
+    protected virtual void Awake() => OnStateChanged = new UnityEvent<ElementalObjectState>(); // Инициализация события
 
     protected virtual void Start()
     {
@@ -29,21 +26,22 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
 
     protected virtual void ChangeState(ElementalObjectState newState)
     {
-        // currentState = newState;
-        // UpdateElementalObjectSprite();
-
-        // OnStateChanged?.Invoke(newState);
-
-        photonView.RPC("RPC_ChangeState", RpcTarget.All, /*(int)*/newState);
-    }
-
-    [PunRPC]
-    public void RPC_ChangeState(ElementalObjectState newState)
-    {
-        currentState = /*(ElementalObjectState)*/newState;
+        currentState = newState;
         UpdateElementalObjectSprite();
-        OnStateChanged?.Invoke(currentState);
+
+        OnStateChanged?.Invoke(newState);
+
+        // photonView.RPC("RPC_ChangeState", RpcTarget.All, /*(int)*/newState);
     }
+
+    // [PunRPC]
+    // public void RPC_ChangeState(ElementalObjectState newState)
+    // {
+    //     currentState = /*(ElementalObjectState)*/newState;
+    //     UpdateElementalObjectSprite();
+    //     OnStateChanged?.Invoke(currentState);
+    // }
+    
     protected void UpdateElementalObjectSprite() => spriteRenderer.sprite = stateSprites[(int)currentState];
 
     protected virtual void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние изменено на: {newState}");

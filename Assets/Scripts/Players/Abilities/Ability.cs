@@ -18,58 +18,44 @@ public abstract class Ability : MonoBehaviourPunCallbacks
 
     public UnityEvent<bool> OnAbilityActiveChanged;
 
-    private void Awake() => playerMovement = GetComponent<Movement>();
-
-    // private void Start()
-    // {
-    //     // if (photonView.IsMine)
-    //     // {
-    //     // abilityObject = PhotonNetwork.Instantiate(abilityColliderPrefab.name, Vector3.zero, Quaternion.identity);
-    //     abilityObject = Instantiate(abilityColliderPrefab);
-    //     abilityCollider = abilityObject.GetComponent<AbilityCollider>();
-    //     abilityCollider.GetComponent<SpriteRenderer>().sprite = abilitySprite;
-    //     abilityCollider.abilityType = this;
-    //     abilityObject.SetActive(false);
-    //     // }
-    // }
+    private void Awake()
+    {
+        playerMovement = GetComponent<Movement>();
+        CreateNewAbilityObject();
+    }
 
     private void Update()
     {
-        // if (!photonView.IsMine) return;
-
-        // if (Input.GetKeyDown(KeyCode.E))
         if (photonView.IsMine && Input.GetKeyDown(KeyCode.E))
-            CreateAbility();
+            SpawnAbility();
 
         if (isAbilityActive)
             SetAbilityCooldown();
     }
 
-    private void CreateAbility()
+    private void SpawnAbility()
     {
         if (abilityTimer != 0) return;
-
-        photonView.RPC("RPC_CreateAbility", RpcTarget.All);
-        // SetAbilityCollider();
-        // UseAbility();
+        photonView.RPC("RPC_SpawnAbility", RpcTarget.All);
     }
 
     [PunRPC]
-    public void RPC_CreateAbility()
+    public void RPC_SpawnAbility()
     {
-        Debug.Log("RPC_CreateAbility вызван");
-        if (abilityObject == null)
-            CreateNewAbilityObject();
-
         SetAbilityCollider();
         UseAbility();
     }
 
     private void CreateNewAbilityObject()
     {
-        abilityObject = PhotonNetwork.Instantiate(abilityColliderPrefab.name, Vector3.zero, Quaternion.identity);
+        if (abilityObject != null) return;
+
+        // abilityObject = PhotonNetwork.Instantiate(abilityColliderPrefab.name, Vector3.zero, Quaternion.identity);
+        abilityObject = Instantiate(abilityColliderPrefab);
+        abilityObject.GetComponent<SpriteRenderer>().sprite = abilitySprite;
+        abilityObject.name = ToString();
+
         abilityCollider = abilityObject.GetComponent<AbilityCollider>();
-        abilityCollider.GetComponent<SpriteRenderer>().sprite = abilitySprite;
         abilityCollider.abilityType = this;
         abilityObject.SetActive(false);
     }
@@ -79,7 +65,6 @@ public abstract class Ability : MonoBehaviourPunCallbacks
         SetColliderActive(true);
         abilityObject.transform.position = playerMovement.isFacingRight ?
             (Vector2)transform.position + abilityPositionOffset : (Vector2)transform.position - abilityPositionOffset;
-        abilityCollider.CheckForElementalObjects();
     }
 
     private void SetColliderActive(bool isActive)
