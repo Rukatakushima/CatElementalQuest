@@ -2,13 +2,13 @@ using UnityEngine;
 using Photon.Pun;
 using System.Collections;
 
+[RequireComponent(typeof(Collider2D))]
 public class Door : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float openHeight = 5f;
     [SerializeField] private float moveSpeed = 2f;
-
-    [SerializeField] private Vector2 closedPosition;
     [SerializeField] private Vector2 openPosition;
+    private Vector2 closedPosition;
     private bool isOpen = false;
 
     private void Start()
@@ -17,8 +17,8 @@ public class Door : MonoBehaviourPunCallbacks
         openPosition = closedPosition + Vector2.up * openHeight;
     }
 
-// Lever Event
-    private void ChangeDoorPosition()
+    // For Lever Event
+    public void ChangeDoorPosition()
     {
         if (isOpen)
             HandleLeverStateChanged(!isOpen);
@@ -26,7 +26,7 @@ public class Door : MonoBehaviourPunCallbacks
             HandleLeverStateChanged(isOpen);
     }
 
-    public void HandleLeverStateChanged(bool isActivated) => photonView.RPC("RPC_SetDoorState", RpcTarget.All, isActivated);
+    private void HandleLeverStateChanged(bool isActivated) => photonView.RPC("RPC_SetDoorState", RpcTarget.All, isActivated);
 
     [PunRPC]
     public void RPC_SetDoorState(bool isOpen)

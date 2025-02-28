@@ -47,6 +47,8 @@ MonoBehaviour:
   - RPC_UpdateFacingDirection
   - RPC_SpawnAbility
   - CreateNewAbilityObject
+  - RPC_ActivateLever
+  - RPC_SetDoorState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
