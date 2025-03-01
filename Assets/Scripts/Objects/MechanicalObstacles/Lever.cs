@@ -3,12 +3,13 @@ using Photon.Pun;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(PhotonView))]
 public class Lever : MonoBehaviourPunCallbacks
 {
     [SerializeField] private KeyCode interactKey = KeyCode.Q;
     private bool isActivated = false;
 
-    public static UnityEvent OnLeverActivated;
+    public UnityEvent OnLeverActivated = new UnityEvent();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,7 +18,7 @@ public class Lever : MonoBehaviourPunCallbacks
             PhotonView playerPhotonView = collision.GetComponent<PhotonView>();
             if (playerPhotonView != null && playerPhotonView.IsMine)
             {
-                Debug.Log("Нажмите E, чтобы активировать рычаг");
+                Debug.Log("Нажмите " + interactKey + ", чтобы активировать рычаг");
             }
         }
     }
@@ -43,19 +44,40 @@ public class Lever : MonoBehaviourPunCallbacks
             if (playerPhotonView != null && playerPhotonView.IsMine)
             {
                 if (Input.GetKeyDown(interactKey))
-                    photonView.RPC("RPC_ActivateLever", RpcTarget.All);
+                {
+                    Debug.Log("photonView = " + photonView);
+                    photonView.RPC("RPC_SwitchLever", RpcTarget.All);
+                }
             }
         }
     }
 
     [PunRPC]
-    public void RPC_ActivateLever()
+    public void RPC_SwitchLever()
     {
-        if (isActivated) return;
+        SwitchLever();
 
-        isActivated = true;
+        if (isActivated)
+            OnLeverActivated?.Invoke();
+    }
+
+    // private void ActivateLever()
+    // {
+    //     isActivated = true;
+    //     RotateLeverHandle();
+    //     OnLeverActivated?.Invoke();
+    // }
+
+    // private void DeactivateLever()
+    // {
+    //     isActivated = false;
+    //     RotateLeverHandle();
+    // }
+
+    private void SwitchLever()
+    {
+        isActivated = !isActivated;
         RotateLeverHandle();
-        OnLeverActivated?.Invoke();
     }
 
     private void RotateLeverHandle()
