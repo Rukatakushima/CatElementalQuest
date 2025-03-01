@@ -35,6 +35,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
     [Header("Game Settings")]
     [SerializeField] private int maxPlayers = 5;
     [SerializeField] private int playersCountToStart = 1;
+    [SerializeField] private string gameLevelName = "Level1";
 
     private void Awake() => TogglePanels(false);
 
@@ -171,5 +172,5 @@ public class MenuManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnClickPlayButton() => PhotonNetwork.LoadLevel("Game");
+    public void OnClickPlayButton() => PhotonNetwork.LoadLevel(gameLevelName);
 }

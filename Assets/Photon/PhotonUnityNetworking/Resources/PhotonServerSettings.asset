@@ -49,6 +49,7 @@ MonoBehaviour:
   - CreateNewAbilityObject
   - RPC_ActivateLever
   - RPC_SetDoorState
+  - RPC_SwitchLever
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

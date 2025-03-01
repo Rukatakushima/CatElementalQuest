@@ -190,7 +190,7 @@ MonoBehaviour:
   abilityPositionOffset: {x: 2, y: 0}
   abilitySprite: {fileID: 21300000, guid: ddc0848df97fac4439b6faf91adc4f95, type: 3}
   abilityCooldown: 2
-  OnAbilityActiveChanged:
+  OnAbilityActive:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4450939335743788259
