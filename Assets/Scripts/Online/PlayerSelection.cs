@@ -39,9 +39,13 @@ public class PlayerSelection : MonoBehaviourPunCallbacks
 
     public void ApplyLocalChanges()
     {
-        backgroundImage.color = highlightColor;
-        leftArrowButton.SetActive(true);
-        rightArrowButton.SetActive(true);
+        bool isLocalPlayer = player == PhotonNetwork.LocalPlayer;
+
+        if (isLocalPlayer)
+            backgroundImage.color = highlightColor;
+
+        leftArrowButton.SetActive(isLocalPlayer);
+        rightArrowButton.SetActive(isLocalPlayer);
     }
 
     public void OnClickLeftArrow()
@@ -63,11 +67,6 @@ public class PlayerSelection : MonoBehaviourPunCallbacks
 
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
-
-    // public void OnClickReady()
-    // {
-
-    // }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer,
                                                   ExitGames.Client.Photon.Hashtable dictionaryEntries)

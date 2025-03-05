@@ -6,40 +6,42 @@ using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviourPunCallbacks
 {
-
-    [Header("Lobby Settings")]
-    public GameObject lobbyPanel;
-
-    [SerializeField] private string defaultNickname = "Purrlayer";
-    public TMP_InputField nicknameInput;
-    public TMP_InputField createRoomInput;
-    // public TMP_InputField joinRoomInput;
-
-    public Transform roomSelectionParent;
-    public RoomSelection roomSelectionPrefab;
-    private List<RoomSelection> roomSelectionList = new();
-
     [SerializeField] private float timeBetweenUpdates = 1.5f;
     private float nextUpdateTime;
 
+    [Header("Lobby Settings")]
+    [SerializeField] private GameObject lobbyPanel;
+
+    [SerializeField] private string defaultNickname = "Purrlayer";
+    [SerializeField] private TMP_InputField nicknameInput;
+    [SerializeField] private TMP_InputField createRoomInput;
+    // public TMP_InputField joinRoomInput;
+
+    [SerializeField] private Transform roomSelectionParent;
+    [SerializeField] private RoomSelection roomSelectionPrefab;
+    private List<RoomSelection> roomSelectionList = new();
+
     [Header("Room Settings")]
-    public GameObject roomPanel;
-    public TMP_Text roomName;
+    [SerializeField] private GameObject roomPanel;
+    [SerializeField] private TMP_Text roomName;
+    [SerializeField] private GameObject playButton;
 
-    public Transform playerSelectionParent; // == roomPanel
-    public PlayerSelection playerSelectionPrefab;
-    public List<PlayerSelection> playerSelectionsList = new();
-
-    public GameObject playButton;
+    private Transform playerSelectionParent; // == roomPanel
+    [SerializeField] private PlayerSelection playerSelectionPrefab;
+    [SerializeField] private List<PlayerSelection> playerSelectionsList = new();
 
     [Header("Game Settings")]
     [SerializeField] private int maxPlayers = 5;
     [SerializeField] private int playersCountToStart = 1;
     [SerializeField] private string gameLevelName = "Level1";
 
-    private void Awake() => TogglePanels(false);
+    private void Awake() => playerSelectionParent = roomPanel.transform;
 
-    private void Start() => PhotonNetwork.JoinLobby();
+    private void Start()
+    {
+        TogglePanels(false);
+        PhotonNetwork.JoinLobby();
+    }
 
     private void Update()
     {
@@ -162,11 +164,9 @@ public class MenuManager : MonoBehaviourPunCallbacks
     {
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
-            PlayerSelection newPlayerSelection = Instantiate(playerSelectionPrefab, playerSelectionParent); // == roomPanel.transform
+            PlayerSelection newPlayerSelection = Instantiate(playerSelectionPrefab, playerSelectionParent);
             newPlayerSelection.SetPlayerInfo(player.Value);
-
-            if (player.Value == PhotonNetwork.LocalPlayer)
-                newPlayerSelection.ApplyLocalChanges();
+            newPlayerSelection.ApplyLocalChanges();
 
             playerSelectionsList.Add(newPlayerSelection);
         }
