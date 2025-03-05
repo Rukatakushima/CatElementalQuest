@@ -64,7 +64,7 @@ public abstract class Ability : MonoBehaviourPunCallbacks
     private void SetAbilityCollider()
     {
         SetColliderActive(true);
-        abilityObject.transform.position = playerMovement.isFacingRight ?
+        abilityObject.transform.position = playerMovement.IsFacingRight ?
             (Vector2)transform.position + abilityPositionOffset : (Vector2)transform.position - abilityPositionOffset;
     }
 

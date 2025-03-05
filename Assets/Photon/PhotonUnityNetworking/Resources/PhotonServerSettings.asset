@@ -50,6 +50,7 @@ MonoBehaviour:
   - RPC_ActivateLever
   - RPC_SetDoorState
   - RPC_SwitchLever
+  - RPC_UpdateWalkingAnimation
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

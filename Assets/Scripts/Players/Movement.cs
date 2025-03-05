@@ -4,11 +4,14 @@ public class Movement : MonoBehaviour
 {
     private PhotonView view;
     private Rigidbody2D rb;
-    private Transform childTransform;
+    [SerializeField] private Transform childTransform;
+    private Animator animator;
     public float moveSpeed, jumpForce;
 
-    private bool isGrounded, previousFacingRight;
-    public bool isFacingRight = true;
+    private bool isGrounded;
+    public bool IsFacingRight = true;
+    // private bool isFacingRight = true;
+    // public bool IsFacingRight { get => isFacingRight; private set => isFacingRight = value; }
 
     private bool isSliding = false;
     [SerializeField] private float slideForce = 8f;
@@ -21,7 +24,10 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
 
-        childTransform = transform.Find("PlayerSprite");
+        if (childTransform == null)
+            childTransform = transform.Find("PlayerSprite");
+
+        animator = childTransform.GetComponent<Animator>();
     }
 
     private void Start()
@@ -51,8 +57,12 @@ public class Movement : MonoBehaviour
     private void Move()
     {
         float moveInput = Input.GetAxis("Horizontal");
+        view.RPC("RPC_UpdateWalkingAnimation", RpcTarget.All, moveInput != 0);
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
+
+    [PunRPC]
+    private void RPC_UpdateWalkingAnimation(bool isWalking) => animator.SetBool("IsWalking", isWalking);
 
     private void Jump()
     {
@@ -64,42 +74,24 @@ public class Movement : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        if (horizontalInput > 0)
-        {
-            if (!isFacingRight)
-            {
-                isFacingRight = true;
-                view.RPC("RPC_UpdateFacingDirection", RpcTarget.All, isFacingRight);
-            }
-        }
-        else if (horizontalInput < 0)
-        {
-            if (isFacingRight)
-            {
-                isFacingRight = false;
-                view.RPC("RPC_UpdateFacingDirection", RpcTarget.All, isFacingRight);
-            }
-        }
-
-        FlipSprite();
+        if ((horizontalInput > 0 && !IsFacingRight) || (horizontalInput < 0 && IsFacingRight))
+            view.RPC("RPC_UpdateFacingDirection", RpcTarget.All, !IsFacingRight);
     }
 
     [PunRPC]
     private void RPC_UpdateFacingDirection(bool facingRight)
     {
-        isFacingRight = facingRight;
+        if (IsFacingRight == facingRight) return;
+
+        IsFacingRight = facingRight;
         FlipSprite();
     }
 
     private void FlipSprite()
     {
-        if (isFacingRight != previousFacingRight)
-        {
-            Vector2 spriteScale = childTransform.localScale;
-            spriteScale.x *= -1;
-            childTransform.localScale = spriteScale;
-        }
-        previousFacingRight = isFacingRight;
+        Vector2 spriteScale = childTransform.localScale;
+        spriteScale.x *= -1;
+        childTransform.localScale = spriteScale;
     }
 
     void OnCollisionStay2D(Collision2D collision)
