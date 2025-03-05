@@ -64,6 +64,11 @@ public class PlayerSelection : MonoBehaviourPunCallbacks
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
+    // public void OnClickReady()
+    // {
+
+    // }
+
     public override void OnPlayerPropertiesUpdate(Player targetPlayer,
                                                   ExitGames.Client.Photon.Hashtable dictionaryEntries)
     {

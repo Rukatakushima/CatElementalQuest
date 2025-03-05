@@ -4,24 +4,12 @@ using TMPro;
 public class RoomSelection : MonoBehaviour
 {
     public TMP_Text roomName;
-    [SerializeField] private string joinRoomTitle = "Join room: ";
 
     private MenuManager menuManager;
 
-    private void Start()
-    {
-        menuManager = FindAnyObjectByType<MenuManager>();
-    }
+    private void Start() => menuManager = FindAnyObjectByType<MenuManager>();
 
-    public void SetRoomName(string roomName)
-    {
-        this.roomName.text = joinRoomTitle + roomName;
-    }
+    public void SetRoomName(string roomName) => this.roomName.text = roomName;
 
-    public void OnClickJoinRoom()
-    {
-        string roomNameOnly = roomName.text.Replace(joinRoomTitle, "");
-        menuManager.JoinRoom(roomNameOnly);
-        // menuManager.JoinRoom(roomName.text);
-    }
+    public void OnClickJoinRoom() => menuManager.JoinRoom(roomName.text);
 }
