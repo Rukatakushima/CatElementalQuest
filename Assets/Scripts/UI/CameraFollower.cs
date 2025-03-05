@@ -7,6 +7,8 @@ public class CameraFollower : MonoBehaviour
     public int zPosition = -10;
     public int speed;
 
+    private void Start() => player = GameObject.FindGameObjectWithTag("Player").transform;
+
     private void Update() => UpdateCameraPosition();
 
     private void UpdateCameraPosition()
