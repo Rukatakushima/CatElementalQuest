@@ -7,21 +7,27 @@ public abstract class Ability : MonoBehaviourPunCallbacks
     private Movement playerMovement;
 
     [SerializeField] private GameObject abilityColliderPrefab;
-    [SerializeField] private Vector2 abilityPositionOffset = new Vector2(2f, 0f);
     private GameObject abilityObject;
     private AbilityCollider abilityCollider;
-    [SerializeField] private Sprite abilitySprite;
 
     public bool isAbilityActive { get; private set; } = false;
     [SerializeField] private float abilityCooldown = 2f;
     private float abilityTimer = 0f;
 
-    public UnityEvent OnAbilityActive;
+    [SerializeField] private Vector2 abilityPositionOffset = new Vector2(2f, 0f);
+    [SerializeField] private Sprite abilitySprite;
+    [SerializeField] private AudioClip abilitySound;
+    private AudioSource audioSource;
+
+    private UnityEvent OnAbilityActive = new();
 
     private void Awake()
     {
         playerMovement = GetComponent<Movement>();
+        audioSource = GetComponent<AudioSource>();
         CreateNewAbilityObject();
+
+        OnAbilityActive.AddListener(PlayAbilitySound);
     }
 
     private void Update()
@@ -51,7 +57,6 @@ public abstract class Ability : MonoBehaviourPunCallbacks
     {
         if (abilityObject != null) return;
 
-        // abilityObject = PhotonNetwork.Instantiate(abilityColliderPrefab.name, Vector3.zero, Quaternion.identity);
         abilityObject = Instantiate(abilityColliderPrefab);
         abilityObject.GetComponent<SpriteRenderer>().sprite = abilitySprite;
         abilityObject.name = ToString();
@@ -83,7 +88,12 @@ public abstract class Ability : MonoBehaviourPunCallbacks
         {
             SetColliderActive(false);
             abilityTimer = 0f;
-            // OnAbilityActiveChanged?.Invoke(false);
         }
+    }
+
+    private void PlayAbilitySound()
+    {
+        if (abilitySound != null && audioSource != null)
+            audioSource.PlayOneShot(abilitySound);
     }
 }

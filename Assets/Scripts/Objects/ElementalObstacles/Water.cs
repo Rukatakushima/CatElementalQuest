@@ -9,16 +9,13 @@ public class Water : DangerousElementalObject
         if (currentState == ElementalObjectState.SecondState)
         {
             Debug.Log("Любой игрок безопасно проходит через лед.");
+            PlayWalkingSound();
             if (playerAbility is IceAbility) return;
             SlipOnIce(playerAbility.gameObject);
-            // if (playerAbility is FireAbility)
-            // {
-            //     Debug.Log("Огненный игрок безопасно проходит через воду.");
-            //     InteractWithElement(playerAbility);
-            // }
         }
         else if (playerAbility is WaterAbility || playerAbility is IceAbility)
         {
+            PlayWalkingSound();
             Debug.Log("Водный или ледяной игрок безопасно проходит через воду.");
         }
         else
@@ -64,7 +61,6 @@ public class Water : DangerousElementalObject
         Movement playerMovement = player.GetComponent<Movement>();
         if (playerMovement == null) return;
 
-        // Vector2 slideDirection = playerMovement.GetComponent<Rigidbody2D>().velocity.normalized;
         playerMovement.StartSliding(slideForce);
         Debug.Log("Игрок начал скользить по льду");
     }
@@ -79,6 +75,4 @@ public class Water : DangerousElementalObject
         playerMovement.StopSliding();
         Debug.Log("Игрок перестал скользить по льду");
     }
-
-    protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние воды изменено на: {newState}");
 }

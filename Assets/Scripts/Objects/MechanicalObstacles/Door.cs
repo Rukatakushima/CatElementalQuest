@@ -2,21 +2,15 @@ using UnityEngine;
 using Photon.Pun;
 using System.Collections;
 
-[RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(PhotonView))]
-public class Door : MonoBehaviourPunCallbacks
+public class Door : MechanicalObstacles
 {
-    [SerializeField] private float openHeight = 5f;
     [SerializeField] private float moveSpeed = 2f;
-    private Vector2 openPosition;
+    [SerializeField] private Vector2 openPosition;
     private Vector2 closedPosition;
     private bool isOpen = false;
+    private bool isMechanismSoundPlaying = false;
 
-    private void Start()
-    {
-        closedPosition = transform.position;
-        openPosition = closedPosition + Vector2.up * openHeight;
-    }
+    private void Start() => closedPosition = transform.position;
 
     public void ChangeDoorPosition() => photonView.RPC("RPC_SetDoorState", RpcTarget.All, !isOpen);
 
@@ -34,9 +28,25 @@ public class Door : MonoBehaviourPunCallbacks
         while (Vector2.Distance(transform.position, targetPosition) > 0.01f)
         {
             transform.position = Vector2.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            OnMechanismActivated?.Invoke();
             yield return null;
         }
 
         transform.position = targetPosition;
+        StopMechanismSound();
+    }
+
+    protected override void PlayMechanismSound()
+    {
+        if (mechanismSound == null || isMechanismSoundPlaying) return;
+
+        isMechanismSoundPlaying = true;
+        audioSource.PlayOneShot(mechanismSound);
+    }
+
+    protected override void StopMechanismSound()
+    {
+        audioSource.Stop();
+        isMechanismSoundPlaying = false;
     }
 }

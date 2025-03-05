@@ -2,12 +2,10 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(PhotonView))]
-public class Lever : MonoBehaviourPunCallbacks
+public class Lever : MechanicalObstacles
 {
     [SerializeField] private KeyCode interactKey = KeyCode.Q;
-    private bool isActivated = false;
+    // private bool isActivated = false;
 
     public UnityEvent OnLeverActivated = new UnityEvent();
 
@@ -57,26 +55,14 @@ public class Lever : MonoBehaviourPunCallbacks
     {
         SwitchLever();
 
-        if (isActivated)
-            OnLeverActivated?.Invoke();
+        // if (isActivated)
+        OnLeverActivated?.Invoke();
+        OnMechanismActivated?.Invoke();
     }
-
-    // private void ActivateLever()
-    // {
-    //     isActivated = true;
-    //     RotateLeverHandle();
-    //     OnLeverActivated?.Invoke();
-    // }
-
-    // private void DeactivateLever()
-    // {
-    //     isActivated = false;
-    //     RotateLeverHandle();
-    // }
 
     private void SwitchLever()
     {
-        isActivated = !isActivated;
+        // isActivated = !isActivated;
         RotateLeverHandle();
     }
 
