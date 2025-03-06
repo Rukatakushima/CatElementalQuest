@@ -2,12 +2,6 @@ using UnityEngine;
 
 public class Stone : ElementalObject
 {
-    protected override void Start()
-    {
-        base.Start();
-        UpdateElementalObjectSprite();
-    }
-
     public override void GetInsideElement(Ability playerAbility) { }
 
     public override void InteractWithElement(Ability playerAbility)
@@ -38,10 +32,6 @@ public class Stone : ElementalObject
     private void HandleDamagedState()
     {
         Debug.Log("Каменная стена полностью разрушена!");
-        // ChangeState(ElementalObjectState.ThirdState);
         gameObject.SetActive(false);
-        // UpdateElementalObjectSprite();
     }
-
-    // protected override void StateChangeEvent(ElementalObjectState newState) => Debug.Log($"Состояние камня изменено на: {newState}");
 }

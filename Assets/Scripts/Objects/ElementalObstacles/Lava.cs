@@ -28,12 +28,9 @@ public class Lava : DangerousElementalObject
 
         Debug.Log("Водяной игрок потушил лаву");
         ChangeState(ElementalObjectState.SecondState);
-        GetComponent<Collider2D>().isTrigger = false;
+        SetColliderTrigger(false);
+        // GetComponent<Collider2D>().isTrigger = false;
     }
 
-    public void BurnPlayer(GameObject player)
-    {
-        Debug.Log("Игрок сгорел!");
-        respawnManager.Respawn(player);
-    }
+    public void BurnPlayer(GameObject player) => RespawnPlayer(player);
 }

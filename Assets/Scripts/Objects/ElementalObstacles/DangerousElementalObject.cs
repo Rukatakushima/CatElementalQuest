@@ -2,44 +2,44 @@ using UnityEngine;
 
 public abstract class DangerousElementalObject : ElementalObject
 {
-    protected RespawnManager respawnManager;
+    protected PlayerSpawner playerSpawner;
+
     [SerializeField] protected AudioClip[] walkingSounds;
     private bool isWalkingSoundPlaying = false;
 
     protected override void Awake()
     {
         base.Awake();
-        respawnManager = FindObjectOfType<RespawnManager>();
+        playerSpawner = FindObjectOfType<PlayerSpawner>();
     }
 
-    private void OnCollisionStay2D(Collision2D other)
+    protected virtual void OnCollisionStay2D(Collision2D other)
     {
         Ability playerAbility = other.gameObject.GetComponent<Ability>();
         if (playerAbility != null)
             GetInsideElement(playerAbility);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
         Ability playerAbility = collision.gameObject.GetComponent<Ability>();
         if (playerAbility != null)
             GetInsideElement(playerAbility);
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    protected virtual void OnCollisionExit2D(Collision2D other)
     {
         Ability playerAbility = other.gameObject.GetComponent<Ability>();
         if (playerAbility != null)
             StopWalkingSound();
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected virtual void OnTriggerExit2D(Collider2D collision)
     {
         Ability playerAbility = collision.gameObject.GetComponent<Ability>();
         if (playerAbility != null)
             StopWalkingSound();
     }
-
 
     protected void PlayWalkingSound()
     {
@@ -48,6 +48,8 @@ public abstract class DangerousElementalObject : ElementalObject
         isWalkingSoundPlaying = true;
         audioSource.loop = false;
         audioSource.PlayOneShot(walkingSounds[(int)currentState]);
+
+        //isWalkingSoundPlaying = false; //
     }
 
     protected void StopWalkingSound()
@@ -56,5 +58,11 @@ public abstract class DangerousElementalObject : ElementalObject
 
         audioSource.Stop();
         isWalkingSoundPlaying = false;
+    }
+
+    protected void RespawnPlayer(GameObject player)
+    {
+        PlayWalkingSound();
+        playerSpawner.Respawn(player);
     }
 }

@@ -12,6 +12,7 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
     [SerializeField] protected Sprite[] stateSprites;
     [SerializeField] protected AudioClip[] stateSounds;
     protected AudioSource audioSource;
+    protected Collider2D elementalObjectCollider;
 
     protected UnityEvent<ElementalObjectState> OnStateChanged; // События, что будут происходить при смене состояния в зависимости от этого состояния
 
@@ -19,6 +20,7 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
+        elementalObjectCollider = GetComponent<Collider2D>();
 
         OnStateChanged = new UnityEvent<ElementalObjectState>();
         // OnStateChanged.AddListener(StateChangeEvent);
@@ -31,7 +33,7 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
 
     public abstract void InteractWithElement(Ability playerAbility);
 
-    protected virtual void ChangeState(ElementalObjectState newState) => photonView.RPC("RPC_ChangeState", RpcTarget.All, newState);
+    protected void ChangeState(ElementalObjectState newState) => photonView.RPC("RPC_ChangeState", RpcTarget.All, newState);
 
     [PunRPC]
     public void RPC_ChangeState(ElementalObjectState newState)
@@ -41,9 +43,14 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
         OnStateChanged?.Invoke(currentState);
     }
 
+    protected void SetColliderTrigger(bool isSettingTrigger) => photonView.RPC("RPC_SetColliderTrigger", RpcTarget.All, isSettingTrigger);
+
+    [PunRPC]
+    public void RPC_SetColliderTrigger(bool isSettingTrigger) => elementalObjectCollider.isTrigger = isSettingTrigger;
+
     protected void UpdateElementalObjectSprite() => spriteRenderer.sprite = stateSprites[(int)currentState];
 
-    protected virtual void PlayChangingStateSound(ElementalObjectState newState)
+    protected void PlayChangingStateSound(ElementalObjectState newState)
     {
         if (stateSounds[(int)newState - 1] == null) return;
 

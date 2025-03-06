@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.34, y: -2.97, z: 0}
-  m_LocalScale: {x: 5.442115, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -68,18 +68,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.012253523, y: 0.052307725}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 2.56, y: 2.56}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 10, y: 2}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.6039276, y: 2.569229}
+  m_Size: {x: 10, y: 2}
   m_EdgeRadius: 0
 --- !u!212 &576990967471096322
 SpriteRenderer:
@@ -121,13 +121,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 66efb24ed46044ab8a039599cbc47d7b, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -735845548, guid: ebd1026ef27ed1a448b34c20c89b74c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_DrawMode: 2
+  m_Size: {x: 10, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateSprites:
-  - {fileID: 21300000, guid: 75198730b713d38479192f3aeecdb9df, type: 3}
-  - {fileID: 21300000, guid: a976739560e5f31489bc7c9c4a01a1fc, type: 3}
+  - {fileID: -735845548, guid: ebd1026ef27ed1a448b34c20c89b74c2, type: 3}
+  - {fileID: 1085503596, guid: 9079549a14765fb4ebe9993067729b0d, type: 3}
   stateSounds:
   - {fileID: 8300000, guid: 2e96601b93531f7499dc19089c11d3c5, type: 3}
   - {fileID: 8300000, guid: 12c5d088a04265045b29f6335ba76ebe, type: 3}

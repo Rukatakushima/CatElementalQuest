@@ -38,7 +38,8 @@ public class Water : DangerousElementalObject
 
         Debug.Log("Вода заморожена"); ;
         ChangeState(ElementalObjectState.SecondState);
-        GetComponent<Collider2D>().isTrigger = false;
+        SetColliderTrigger(false);
+        // GetComponent<Collider2D>().isTrigger = false;
     }
 
     private void DefrostWater()
@@ -47,14 +48,11 @@ public class Water : DangerousElementalObject
 
         Debug.Log("Вода разморожена");
         ChangeState(ElementalObjectState.FirstState);
-        GetComponent<Collider2D>().isTrigger = true;
+        SetColliderTrigger(true);
+        // GetComponent<Collider2D>().isTrigger = true;
     }
 
-    private void DrownPlayer(GameObject player)
-    {
-        Debug.Log("Игрок утонул!");
-        respawnManager.Respawn(player);
-    }
+    private void DrownPlayer(GameObject player) => RespawnPlayer(player);
 
     private void SlipOnIce(GameObject player)
     {
@@ -65,7 +63,7 @@ public class Water : DangerousElementalObject
         Debug.Log("Игрок начал скользить по льду");
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    protected override void OnCollisionExit2D(Collision2D collision)
     {
         if (currentState != ElementalObjectState.SecondState) return;
 
