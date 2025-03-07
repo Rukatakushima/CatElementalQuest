@@ -41,6 +41,8 @@ public abstract class DangerousElementalObject : ElementalObject
             StopWalkingSound();
     }
 
+    public abstract void GetInsideElement(Ability playerAbility);
+
     protected void PlayWalkingSound()
     {
         if (walkingSounds[(int)currentState] == null || isWalkingSoundPlaying) return;

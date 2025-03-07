@@ -29,8 +29,6 @@ public abstract class ElementalObject : MonoBehaviourPunCallbacks
 
     protected virtual void Start() => UpdateElementalObjectSprite();
 
-    public abstract void GetInsideElement(Ability playerAbility);
-
     public abstract void InteractWithElement(Ability playerAbility);
 
     protected void ChangeState(ElementalObjectState newState) => photonView.RPC("RPC_ChangeState", RpcTarget.All, newState);

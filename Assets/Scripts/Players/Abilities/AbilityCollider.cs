@@ -11,7 +11,7 @@ public class AbilityCollider : MonoBehaviourPunCallbacks
 
     private void Awake() => abilityCollider = GetComponent<Collider2D>();
 
-    private void Update() => CheckForElementalObjects();
+    // private void Update() => CheckForElementalObjects();
 
     public void CheckForElementalObjects()
     {
@@ -23,7 +23,6 @@ public class AbilityCollider : MonoBehaviourPunCallbacks
         for (int i = 0; i < collisionCunt; i++)
         {
             Collider2D other = results[i];
-            Debug.Log($"Обнаружено пересечение с объектом: {other.name}");
 
             ElementalObject elementalObject = other.GetComponent<ElementalObject>();
 

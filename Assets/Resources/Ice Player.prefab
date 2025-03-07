@@ -192,7 +192,7 @@ MonoBehaviour:
   abilityCooldown: 2
   abilityPositionOffset: {x: 2, y: 0}
   abilitySprite: {fileID: 21300000, guid: 701c6e01608b7ea48b0b28e93c0934c0, type: 3}
-  abilitySound: {fileID: 8300000, guid: 5f38e88037b8a3a4fbcf2ddc8a33c3be, type: 3}
+  abilitySound: {fileID: 8300000, guid: 981acca381cb82844804e66f51daff14, type: 3}
 --- !u!82 &-476619795543191613
 AudioSource:
   m_ObjectHideFlags: 0

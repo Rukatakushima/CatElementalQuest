@@ -1,17 +1,29 @@
+using System.Collections;
 using UnityEngine;
 
 public class Stone : ElementalObject
 {
-    public override void GetInsideElement(Ability playerAbility) { }
+    [SerializeField] private float cooldown = 2f;
+    [SerializeField] private bool isOnCooldown = false;
 
     public override void InteractWithElement(Ability playerAbility)
     {
+        if (isOnCooldown)
+        {
+            Debug.Log("Камень на кулдауне, изменение состояния невозможно.");
+            return;
+        }
+
         if (playerAbility is EarthAbility)
+            HandleDamagedState();
+
+        else if (playerAbility is IceAbility)
         {
             switch (currentState)
             {
                 case ElementalObjectState.FirstState:
                     HandleNormalState();
+                    StartCooldown();
                     break;
                 case ElementalObjectState.SecondState:
                     HandleDamagedState();
@@ -24,14 +36,28 @@ public class Stone : ElementalObject
 
     private void HandleNormalState()
     {
-        Debug.Log("Каменная стена разрушается!");
         ChangeState(ElementalObjectState.SecondState);
         UpdateElementalObjectSprite();
     }
 
     private void HandleDamagedState()
     {
-        Debug.Log("Каменная стена полностью разрушена!");
+        OnStateChanged?.Invoke(ElementalObjectState.ThirdState);
         gameObject.SetActive(false);
+    }
+
+    private void StartCooldown()
+    {
+        if (isOnCooldown) return;
+
+        isOnCooldown = true;
+        StartCoroutine(CooldownCoroutine());
+    }
+
+    private IEnumerator CooldownCoroutine()
+    {
+        yield return new WaitForSeconds(cooldown);
+        isOnCooldown = false;
+        Debug.Log("Кулдаун закончился, можно изменять состояние.");
     }
 }

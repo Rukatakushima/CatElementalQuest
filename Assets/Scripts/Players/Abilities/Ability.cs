@@ -1,18 +1,20 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
+using System.Collections;
 
 public abstract class Ability : MonoBehaviourPunCallbacks
 {
     private Movement playerMovement;
 
     [SerializeField] private GameObject abilityColliderPrefab;
-    private GameObject abilityObject;
+    protected GameObject abilityObject;
     private AbilityCollider abilityCollider;
 
     public bool isAbilityActive { get; private set; } = false;
     [SerializeField] private float abilityCooldown = 2f;
-    private float abilityTimer = 0f;
+    // private float abilityTimer = 0f;
+    [SerializeField] protected bool shouldDeactiveCollider = true;
 
     [SerializeField] private Vector2 abilityPositionOffset = new Vector2(2f, 0f);
     [SerializeField] private Sprite abilitySprite;
@@ -21,13 +23,14 @@ public abstract class Ability : MonoBehaviourPunCallbacks
 
     private UnityEvent OnAbilityActive = new();
 
-    private void Awake()
+    protected virtual void Awake()
     {
         playerMovement = GetComponent<Movement>();
         audioSource = GetComponent<AudioSource>();
         CreateNewAbilityObject();
 
         OnAbilityActive.AddListener(PlayAbilitySound);
+        OnAbilityActive.AddListener(abilityCollider.CheckForElementalObjects);
     }
 
     private void Update()
@@ -35,13 +38,13 @@ public abstract class Ability : MonoBehaviourPunCallbacks
         if (photonView.IsMine && Input.GetKeyDown(KeyCode.E))
             SpawnAbility();
 
-        if (isAbilityActive)
-            SetAbilityCooldown();
+        // if (isAbilityActive)
+        //     SetAbilityCooldown();
     }
 
     private void SpawnAbility()
     {
-        if (abilityTimer != 0) return;
+        if (isAbilityActive) return;
         photonView.RPC("RPC_SpawnAbility", RpcTarget.All);
     }
 
@@ -50,6 +53,7 @@ public abstract class Ability : MonoBehaviourPunCallbacks
     {
         SetAbilityCollider();
         UseAbility();
+        StartCoroutine(StartAbilityCooldown());
         OnAbilityActive?.Invoke();
     }
 
@@ -81,15 +85,26 @@ public abstract class Ability : MonoBehaviourPunCallbacks
 
     public abstract void UseAbility();
 
-    private void SetAbilityCooldown()
+    private IEnumerator StartAbilityCooldown()
     {
-        abilityTimer += Time.deltaTime;
-        if (abilityTimer >= abilityCooldown)
-        {
+        isAbilityActive = true;
+        yield return new WaitForSeconds(abilityCooldown);
+
+        if (shouldDeactiveCollider)
             SetColliderActive(false);
-            abilityTimer = 0f;
-        }
+        isAbilityActive = false;
     }
+
+    // private void SetAbilityCooldown()
+    // {
+    //     abilityTimer += Time.deltaTime;
+    //     if (abilityTimer >= abilityCooldown)
+    //     {
+    //         if (shouldDeactiveCollider)
+    //             SetColliderActive(false);
+    //         abilityTimer = 0f;
+    //     }
+    // }
 
     private void PlayAbilitySound()
     {

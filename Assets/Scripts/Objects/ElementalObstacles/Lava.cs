@@ -6,10 +6,7 @@ public class Lava : DangerousElementalObject
     public override void GetInsideElement(Ability playerAbility)
     {
         if (playerAbility is FireAbility || currentState == ElementalObjectState.SecondState)
-        {
             PlayWalkingSound();
-            Debug.Log("Любой игрок безопасно проходит через потушенную лаву.");
-        }
         else
             BurnPlayer(playerAbility.gameObject);
     }
@@ -26,10 +23,8 @@ public class Lava : DangerousElementalObject
     {
         if (currentState != ElementalObjectState.FirstState) return;
 
-        Debug.Log("Водяной игрок потушил лаву");
         ChangeState(ElementalObjectState.SecondState);
         SetColliderTrigger(false);
-        // GetComponent<Collider2D>().isTrigger = false;
     }
 
     public void BurnPlayer(GameObject player) => RespawnPlayer(player);
